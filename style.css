@@ -6,7 +6,30 @@ body {
     background-color: #f0f0f0;
   }
   
-  #gameCanvas {
-    border: 1px solid #333;
-  }
-  
+#gameCanvas {
+  border: 1px solid #333;
+}
+
+#map-grid-container {
+  display: grid;
+  grid-template-columns: repeat(30, 52px); /* 30 columns, each tile is 52px wide */
+  grid-template-rows: repeat(20, 52px);    /* 20 rows, each tile is 52px high */
+  gap: 0;
+  width: max-content;
+  margin: auto;
+}
+
+.tile {
+  width: 52px;
+  height: 52px;
+  background-color: #cccccc; /* Default color */
+  border: 1px solid #aaa;
+}
+
+.tile-1 {
+  background-color: red;    /* Example: Tile ID 1 could be red */
+}
+
+.tile-2 {
+  background-color: green;  /* Example: Tile ID 2 could be green */
+}
