@@ -3,7 +3,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Load the tile map JSON data
-fetch('mapTest.json')
+fetch('maptemplate.json')
   .then((response) => response.json())
   .then((mapData) => {
     const tileWidth = mapData.tilewidth;
@@ -11,7 +11,7 @@ fetch('mapTest.json')
 
     // Load the tileset image
     const tilesetImage = new Image();
-    tilesetImage.src = "scuffed.png";
+    tilesetImage.src = "tilegreenbrown.png";
 
     // Once the tileset image loads, render the map
     tilesetImage.onload = () => {
@@ -40,3 +40,6 @@ fetch('mapTest.json')
   .catch((error) => {
     console.error("Error loading tilemap:", error);
   });
+
+  const TILE_WIDTH = 52;
+  const TILE_HEIGHT = 52;
