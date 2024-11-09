@@ -9,4 +9,12 @@ body {
   #gameCanvas {
     border: 1px solid #333;
   }
+  #duck1{
+    position: absolute;
+    top:  1600px;
+    right: 2350px;
+    width: 100px;
+    height: 64px;
+  }
+  
   
