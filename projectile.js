@@ -1,3 +1,34 @@
+// shop and tower selection
+var moneydisplay = document.getElementById('overlay-text');
+var moneycount = 0;
+moneydisplay.innerHTML = `Money: ${moneycount}`;
+
+var selectedTower = 1
+
+var tower1 = document.getElementById('tower1')
+var tower2 = document.getElementById('tower2')
+
+tower1.addEventListener("click", function() {
+
+  // Toggle between two classes
+  tower1.classList.toggle("answerBtnsOn");
+  tower2.classList.toggle("answerBtnsOff");
+  selectedTower = 1
+  console.log(selectedTower)
+});
+
+tower2.addEventListener("click", function() {
+  // Toggle between two classes
+
+
+  
+  tower2.classList.toggle("answerBtnsOn");
+  tower1.classList.toggle("answerBtnsOff");
+  selectedTower = 2
+  console.log(selectedTower)
+});
+
+
 class Tile {
   constructor(tileDiv, tileId) {
     this.element = tileDiv;  // The DOM element representing the tile
@@ -105,3 +136,4 @@ class Bullet {
         }
     }
 }
+

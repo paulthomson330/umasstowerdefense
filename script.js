@@ -47,3 +47,4 @@ fetch('maptemplate.json')
     });
   })
   .catch(error => console.error('Error fetching map data:', error));
+  

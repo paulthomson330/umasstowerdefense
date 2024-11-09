@@ -50,8 +50,8 @@ body {
 
 #overlay-text {
   position: absolute;  /* Position the text relative to the grid */
-  top: 80%;  /* Adjust the vertical position (30% from the top) */
-  left: 80%; /* Adjust the horizontal position (50% from the left) */
+  top: 90%;  /* Adjust the vertical position (30% from the top) */
+  left: 82.5%; /* Adjust the horizontal position (50% from the left) */
   transform: translate(-50%, -50%);  /* Center the text */
   font-size: 2rem;  /* Adjust the font size */
   color: rgb(0, 0, 0);  /* Text color */
@@ -59,4 +59,40 @@ body {
   padding: 20px;  /* Padding around the text */
   border-radius: 5px; /* Optional: rounded corners */
   z-index: 10;  /* Ensure text appears above the grid */
+}
+
+#towerselection {
+  position: absolute;  /* Position the text relative to the grid */
+  top: 90%;  /* Adjust the vertical position (30% from the top) */
+  left: 60%; /* Adjust the horizontal position (50% from the left) */
+  transform: translate(-50%, -50%);  /* Center the text */
+  font-size: 2rem;  /* Adjust the font size */
+  color: rgb(0, 0, 0);  /* Text color */
+  background-color: rgba(255, 255, 255, 1);  /* Semi-transparent background */
+  padding: 20px;  /* Padding around the text */
+  border-radius: 5px; /* Optional: rounded corners */
+  z-index: 10;  /* Ensure text appears above the grid */
+}
+
+.answerBtnsOff
+{
+    BACKGROUND-COLOR: #ffffff;
+    BORDER-BOTTOM: #666666 1px solid;
+    BORDER-LEFT: #666666 1px solid;
+    BORDER-RIGHT: #666666 1px solid;
+    BORDER-TOP: #666666 1px solid;  
+    COLOR: #ccc;
+    FONT: 11px Verdana,Arial,Helvetica,sans-serif;
+    font-weight:bold;
+}
+.answerBtnsOn
+{
+    BACKGROUND-COLOR: GREEN;
+    BORDER-BOTTOM: #666666 1px solid;
+    BORDER-LEFT: #666666 1px solid;
+    BORDER-RIGHT: #666666 1px solid;
+    BORDER-TOP: #666666 1px solid;  
+    COLOR: #ffffff;
+    FONT: 11px Verdana,Arial,Helvetica,sans-serif;
+    font-weight:bold;
 }
