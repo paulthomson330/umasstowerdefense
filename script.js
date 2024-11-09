@@ -64,20 +64,25 @@ fetch('maptemplate.json')
 
     const mapContainer = document.getElementById('map-grid-container');
 
+    let tile_id = 0;
+
     // Create tiles dynamically based on the data array
     data.forEach((tileId, index) => {
         const tileDiv = document.createElement('div');
         tileDiv.classList.add('tile');
-
-        var tile_id = 0;
         
         // Example: Assign specific classes based on tileId
         if (tileId === 1) {
             tileDiv.classList.add('tile-1');
         } else if (tileId === 2) {
             tileDiv.classList.add('tile-2');
-            tileDiv.id = 'tile-${tile_id}';
-            
+            tileDiv.id = `tile-${tile_id}`;
+            tileDiv.addEventListener('click', (function (tileId) {
+              return function () {
+                console.log(`Tile ${tileId} clicked!`);
+              }
+            })(tile_id));
+
             tile_id += 1;
         }
 
