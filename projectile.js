@@ -9,25 +9,30 @@ var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
 
 tower1.addEventListener("click", function() {
-
-  // Toggle between two classes
-  tower1.classList.toggle("answerBtnsOn");
-  tower2.classList.toggle("answerBtnsOff");
-  selectedTower = 1
-  console.log(selectedTower)
+  // Ensure both towers are reset
+  tower1.classList.remove("answerBtnsOff", "answerBtnsOn");
+  tower2.classList.remove("answerBtnsOff", "answerBtnsOn");
+  
+  // Apply the correct classes
+  tower1.classList.add("answerBtnsOn");
+  tower2.classList.add("answerBtnsOff");
+  
+  selectedTower = 1;
+  console.log(selectedTower);
 });
 
 tower2.addEventListener("click", function() {
-  // Toggle between two classes
-
-
+  // Ensure both towers are reset
+  tower1.classList.remove("answerBtnsOff", "answerBtnsOn");
+  tower2.classList.remove("answerBtnsOff", "answerBtnsOn");
   
-  tower2.classList.toggle("answerBtnsOn");
-  tower1.classList.toggle("answerBtnsOff");
-  selectedTower = 2
-  console.log(selectedTower)
+  // Apply the correct classes
+  tower2.classList.add("answerBtnsOn");
+  tower1.classList.add("answerBtnsOff");
+  
+  selectedTower = 2;
+  console.log(selectedTower);
 });
-
 
 class Tile {
   constructor(tileDiv, tileId) {

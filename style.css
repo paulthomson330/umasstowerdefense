@@ -64,7 +64,7 @@ body {
 #towerselection {
   position: absolute;  /* Position the text relative to the grid */
   top: 90%;  /* Adjust the vertical position (30% from the top) */
-  left: 60%; /* Adjust the horizontal position (50% from the left) */
+  left: 70%; /* Adjust the horizontal position (50% from the left) */
   transform: translate(-50%, -50%);  /* Center the text */
   font-size: 2rem;  /* Adjust the font size */
   color: rgb(0, 0, 0);  /* Text color */
