@@ -1,46 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>UMass Tower Defense</title>
-    <script src="phaser.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tile Map Renderer</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<script>
-    var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
-
-    var game = new Phaser.Game(config);
-
-    function preload ()
-    {
-    }
-
-    function create ()
-    {
-    }
-
-    function update ()
-    {
-    }
-    const game = new Phaser.Game(config);
-    </script>
-
-<style>
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-    }
-</style>
-
+  <canvas id="gameCanvas" width="1920" height="1920"></canvas>
+  <script src="script.js"></script>
 </body>
 </html>
