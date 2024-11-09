@@ -47,3 +47,16 @@ body {
   position: absolute;
   z-index: 20;
 }
+
+#overlay-text {
+  position: absolute;  /* Position the text relative to the grid */
+  top: 80%;  /* Adjust the vertical position (30% from the top) */
+  left: 80%; /* Adjust the horizontal position (50% from the left) */
+  transform: translate(-50%, -50%);  /* Center the text */
+  font-size: 2rem;  /* Adjust the font size */
+  color: rgb(0, 0, 0);  /* Text color */
+  background-color: rgba(255, 255, 255, 1);  /* Semi-transparent background */
+  padding: 20px;  /* Padding around the text */
+  border-radius: 5px; /* Optional: rounded corners */
+  z-index: 10;  /* Ensure text appears above the grid */
+}
