@@ -19,16 +19,32 @@ body {
 .tile {
   width: 5vh;
   height: 5vh;
+  width: 5vh;
+  height: 5vh;
   background-color: #cccccc; /* Default color */
   border: 1px solid #aaa;
 }
 
 .tile-1 {
-  background-color: red;    /* Example: Tile ID 1 could be red */
+  background-color: rgb(151, 27, 47);    /* Example: Tile ID 1 could be red */
 }
 
 .tile-2 {
-  background-color: green;  /* Example: Tile ID 2 could be green */
+  background-color: rgb(7, 121, 7);  /* Example: Tile ID 2 could be green */
+}
+
+.tower {
+  width: 4.5vh; /* example size */
+  height: 4.5vh; /* example size */
+  position: absolute;
+  z-index: 10;
+}
+
+.bullet {
+  width: 1vh; /* example size */
+  height: 1vh; /* example size */
+  position: absolute;
+  z-index: 20;
 }
 
 .tower {
