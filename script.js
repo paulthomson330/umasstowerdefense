@@ -68,12 +68,17 @@ fetch('maptemplate.json')
     data.forEach((tileId, index) => {
         const tileDiv = document.createElement('div');
         tileDiv.classList.add('tile');
+
+        var tile_id = 0;
         
         // Example: Assign specific classes based on tileId
         if (tileId === 1) {
             tileDiv.classList.add('tile-1');
         } else if (tileId === 2) {
             tileDiv.classList.add('tile-2');
+            tileDiv.id = 'tile-${tile_id}';
+            
+            tile_id += 1;
         }
 
         // Append each tile to the container

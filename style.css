@@ -12,8 +12,8 @@ body {
 
 #map-grid-container {
   display: grid;
-  grid-template-columns: repeat(30, 52px); /* 30 columns, each tile is 52px wide */
-  grid-template-rows: repeat(20, 52px);    /* 20 rows, each tile is 52px high */
+  grid-template-columns: repeat(30, 5vh); /* 30 columns, each tile is 52px wide */
+  grid-template-rows: repeat(20, 5vh);    /* 20 rows, each tile is 52px high */
   gap: 0;
   width: max-content;
   margin: auto;
