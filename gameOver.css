@@ -1,0 +1,116 @@
+*{
+    color:rgb(255, 255, 255);
+    background-color: rgb(151, 27, 47);
+
+}
+body{
+    background-repeat: no-repeat;
+    background-position-y: 70px;
+    background-size: 700px 200px;
+    text-align: center;
+}
+h1{
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+h2{
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+h3{
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+h4{
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+img {
+    background-color: rgb(255, 255, 255);
+    color: white;
+    padding: 5px 5px;
+    width: 50px;
+    height: auto;
+    border: none;
+    border-radius: 800px;
+    outline: none;
+}
+
+/* #farm {
+    top: 200px;
+    left: 270px;
+    position: absolute;
+    color:black;
+    background-color:pink;
+
+}
+#instructionsLink{
+    background-color: black;
+    top:50px;
+    margin-right: 1385px;
+}
+
+.invisible{
+    visibility:hidden;
+}
+.visible{
+    visibility:visible;
+}
+#shopText{
+    color:black;
+    top: 50px;
+    right: 200px;
+    position: absolute;
+}
+div.relative{
+    color:black;
+    position: relative;
+    width: 400px;
+    height: 200px;
+    left: 1100px;
+    border: 3px solid #73AD21;
+}
+div.inner1{
+    color:black;
+    position: relative;
+    top:  -20px;
+    right: -295px;
+    width: 100px;
+    height: 50px;
+    text-align:center;
+    border: 3px solid #151b0e;
+    margin-bottom: 10px;
+  }
+ div.inner3{
+    right: 30px;
+    color:black;
+    border: solid red;
+    position: absolute;
+
+  }
+div.inner2{
+    color:black;
+    position: absolute;
+    top:  50px;
+    right: 0px;
+    width: 100px;
+    height: 50px;
+    text-align:center;
+    border: 3px solid rgb(223, 11, 47);
+    margin-bottom: 10px;
+  }
+
+#longSwordImage{
+    height:100%;
+    width:100%;
+    object-fit: contain;
+
+}
+#buyButton1{
+    right:0px;
+    background-color: rgb(223, 11, 47);
+} */
