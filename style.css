@@ -27,7 +27,7 @@ body {
 }
 
 .tile-1 {
-  background-color: red;    /* Example: Tile ID 1 could be red */
+  background-color: rgb(151, 27, 47);    /* Example: Tile ID 1 could be red */
 }
 
 .tile-2 {
