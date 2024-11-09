@@ -20,16 +20,16 @@ body {
 }
 
 .tile {
-  width: 52px;
-  height: 52px;
+  width: 5vh;
+  height: 5vh;
   background-color: #cccccc; /* Default color */
   border: 1px solid #aaa;
 }
 
 .tile-1 {
-  background-color: red;    /* Example: Tile ID 1 could be red */
+  background-color: rgb(151, 27, 47);    /* Example: Tile ID 1 could be red */
 }
 
 .tile-2 {
-  background-color: green;  /* Example: Tile ID 2 could be green */
+  background-color: rgb(7, 121, 7);  /* Example: Tile ID 2 could be green */
 }
