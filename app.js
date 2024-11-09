@@ -7,16 +7,16 @@ var upCounter = 0;
 // Add CSS transition for smooth transform animation
 image.style.transition = "transform 0.5s ease";
 //IT RUNS 5 times.
-    setInterval(function() {
-    if (upCounter >= 5) {
+var interval = setInterval(function() {
+    if (upCounter >= 500) {
         clearInterval(interval); // Stop the interval when upCounter reaches 5
     }
     // Update the image source
-    positionY -= 100; // Move up by 10px each time
+    positionY -= 1; // Move up by 10px each time
     image.style.transform = `translateY(${positionY}px)`;
     upCounter+=1;
     // Increment the index and loop back to the start when reaching the end
-}, 1000); // Set interval time to 1 second
+}, 10); // Set interval time to 1 second
 
 setInterval(function() {
     // Update the image source
@@ -25,3 +25,4 @@ setInterval(function() {
     // Increment the index and loop back to the start when reaching the end
     i = (i + 1) % images.length;
 }, 1000); // Set interval time to 1 second
+
