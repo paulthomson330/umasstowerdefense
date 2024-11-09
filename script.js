@@ -1,12 +1,11 @@
-// Set up canvas and context
+// Tile class definition
 
+// Fetch the map data and create tiles
 fetch('maptemplate.json')
   .then(response => {
-    // Check if the response is successful (status 200)
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
-    // Parse the JSON data from the response
     return response.json();
   })
   .then(mapData => {
@@ -14,35 +13,37 @@ fetch('maptemplate.json')
     const layer = mapData.layers[0];
     const tileWidth = mapData.tilewidth;
     const tileHeight = mapData.tileheight;
-    const width = layer.width;
-    const height = layer.height;
     const data = layer.data;
 
     const mapContainer = document.getElementById('map-grid-container');
 
     let tile_id = 0;
+    const tiles = [];  // To store Tile objects
 
     // Create tiles dynamically based on the data array
     data.forEach((tileId, index) => {
         const tileDiv = document.createElement('div');
         tileDiv.classList.add('tile');
-        
-        // Example: Assign specific classes based on tileId
-        if (tileId === 1) {
-            tileDiv.classList.add('tile-1');
-        } else if (tileId === 2) {
-            tileDiv.classList.add('tile-2');
-            tileDiv.id = `tile-${tile_id}`;
-            tileDiv.addEventListener('click', (function (tileId) {
-              return function () {
-                console.log(`Tile ${tileId} clicked!`);
-              }
-            })(tile_id));
+        tileDiv.id = `tile-${tile_id}`;
 
-            tile_id += 1;
-        }
+        const tile = new Tile(tileDiv, tileId);  // Create a Tile object
 
-        // Append each tile to the container
+        // Store the Tile object in the tiles array
+        tiles.push(tile);
+
+        // Add click event to each tile to place a tower
+        tileDiv.addEventListener('click', () => {
+            console.log(`Tile ${tileId} clicked!`);
+            if (tile.canPlaceTower()) {
+                const tower = new Tower('block.png', tile); // Create a new Tower
+                tile.placeTower(tower); // Place the tower on the clicked tile
+            } else {
+                console.log('Cannot place tower here!');
+            }
+        });
+
         mapContainer.appendChild(tileDiv);
+        tile_id += 1;  // Increment the tile ID
     });
   })
+  .catch(error => console.error('Error fetching map data:', error));

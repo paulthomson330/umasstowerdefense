@@ -1,50 +1,78 @@
-class grid {
+class Tile {
+  constructor(tileDiv, tileId) {
+    this.element = tileDiv;  // The DOM element representing the tile
+    this.tileId = tileId;    // The ID from the map data
+    this.placedTower = null; // Will hold a reference to the tower placed on this tile
 
-}
-class tile {
+    this.setClass();  // Assign class based on tile ID
+  }
 
+  // Set the class of the tile based on its ID
+  setClass() {
+    if (this.tileId === 1) {
+      this.element.classList.add('tile-1');
+    } else if (this.tileId === 2) {
+      this.element.classList.add('tile-2');
+    }
+  }
+
+  // Method to check if a tower can be placed on this tile
+  canPlaceTower() {
+    return this.tileId === 2;  // Example: Only allow towers on tile-2
+  }
+
+  // Method to place a tower on this tile
+  placeTower(tower) {
+    if (this.canPlaceTower()) {
+      this.placedTower = tower; // The tower is placed on this tile
+      this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
+      const bullet = new Bullet(tower,(Math.random()*20)+1,(Math.random()*20)+1);
+
+      function animate() {
+        bullet.shoot();  // Update bullet position
+        requestAnimationFrame(animate);  // Request the next frame of animation
+      }
+
+      animate();
+    } else {
+      console.log("Cannot place tower on this tile.");
+    }
+  }
 }
 
-class enemy {
-    
-}
 
 class Tower {
-    constructor(x, y, png, tile) {
-      this.xx = tile.x;        // Initial X position (where the tower starts)
-      this.yy = tile.y;        // Initial Y position (where the tower starts)
-      this.png = png;
-      this.tile = tile;
-      this.element = this.createTowerElement();  // Create the DOM element
-    }
+  constructor(png, tile) {
+      
+      this.tile = tile; // The Tile object
+      this.png = png; // The image for the tower
+      this.element = this.createTowerElement(); // Create the DOM element for the tower
 
-    checkPlacement(){
-        if (this.tile.class = "tile-2"){
-            console.log("yes")
-        }else{
-            console.log("no")
-        }
-    }
-  
-    createTowerElement() {
-        const tower = document.createElement('div');
-        tower.classList.add('tower');
-        tower.style.backgroundImage = `url(${this.png})`;  // Set the background image
-        tower.style.backgroundSize = 'cover';  // Ensure the image covers the div
-        tower.style.position = 'absolute';  // Position the tower absolutely
-        tower.style.left = `${this.xx}px`;   // Set the X position using this.X
-        tower.style.top = `${this.yy}px`;    // Set the Y position using this.Y
-        document.body.appendChild(tower);  // Append the tower to the body
-        return tower;  // Return the DOM element
-      }
+      this.x = this.tile.element.offsetLeft;
+      this.y = this.tile.element.offsetTop;
+  }
+
+  createTowerElement() {
+      const tower = document.createElement('div');
+      tower.classList.add('tower');
+      tower.style.backgroundImage = `url(${this.png})`;  // Set the background image
+      tower.style.backgroundSize = 'cover';  // Ensure the image covers the div
+      tower.style.position = 'absolute';  // Position the tower absolutely relative to the tile
+      tower.style.left = '1px';   // Set the X position relative to the tile
+      tower.style.top = '1px';    // Set the Y position relative to the tile
+      return tower;  // Return the DOM element
+  }
 }
 
+// Bullet class definition
 class Bullet {
-    constructor(x, y) {
-      this.homeX = x;        // Initial X position (where the bullet starts)
-      this.homeY = y;        // Initial Y position (where the bullet starts)
-      this.currentX = x;     // Current X position
-      this.currentY = y;     // Current Y position
+    constructor(tower, spx, spy) {
+      this.spx = spx;
+      this.spy = spy;
+      this.homeX = tower.x;        // Initial X position (where the bullet starts)
+      this.homeY = tower.y;        // Initial Y position (where the bullet starts)
+      this.currentX = tower.x;     // Current X position
+      this.currentY = tower.y;     // Current Y position
       this.element = this.createBulletElement();  // Create the DOM element
     }
   
@@ -60,9 +88,9 @@ class Bullet {
       return bullet;
     }
 
-    shoot(spx, spy){
-        const speedx = spx;
-        const speedy = spy;
+    shoot(){
+        const speedx = this.spx;
+        const speedy = this.spy;
         this.currentX += speedx;  // Update the current X position by the speed
         this.currentY += speedy;
         
@@ -71,19 +99,9 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX > window.innerWidth | this.currentY > window.innerHeight) {
+        if (this.currentX > window.innerWidth || this.currentY > window.innerHeight || this.currentX < 0 || this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
         }
     }
 }
-
-const tower1 = new Tower(100, 200, 'block.png', document.getElementById("tile-1"));
-const bullet = new Bullet(tower1.xx, tower1.yy);
-
-function animate() {
-    bullet.shoot(5, 7);
-    requestAnimationFrame(animate);
-  }
-  
-animate();
