@@ -1,10 +1,6 @@
 // Some stats
 lives = 20
 
-
-
-
-
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
 var moneycount = 0;
@@ -63,14 +59,7 @@ class TowerType{
     console.log(`Tower ID: ${this.type}, Image: ${this.png}`);
   }
 
-  // getTowerType(){
-  //   return this;
-  // }
 }
-
-// export function getTowerVar(){
-//   return towerType.getTowerType();
-// }
 
 var selectedTower = 1
 
