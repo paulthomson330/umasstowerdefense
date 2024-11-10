@@ -10,7 +10,7 @@ class dartboard{
   }
 }
 
-lives = 5
+lives = 5;
 var livesdisplay = document.getElementById('lives-overlay');
 var wavedisplay = document.getElementById('waveslabel');
 // Shop and tower selection
@@ -368,29 +368,96 @@ class Enemy {
 let enemies = [];
 
 // Function to spawn a new enemy and add it to the enemies array
+var runImages = ["assets/runpngs/fly1.png", "assets/runpngs/fly2.png", "assets/runpngs/fly3.png", "assets/runpngs/fly4.png", "assets/runpngs/fly5.png", "assets/runpngs/fly6.png", "assets/runpngs/fly5.png", "assets/runpngs/fly4.png", "assets/runpngs/fly3.png", "assets/runpngs/fly2.png", "assets/runpngs/fly1.png"]
+var flyImages = ["assets/flypngs/walk1.png", "assets/flypngs/walk2.png", "assets/flypngs/walk3.png", "assets/flypngs/walk4.png", "assets/flypngs/walk5.png", "assets/flypngs/walk6.png", "assets/flypngs/walk7.png", "assets/flypngs/walk8.png", "assets/flypngs/walk9.png", "assets/flypngs/walk10.png"]
+
 function spawnEnemy(n) {
   if(n==1){
-  const enemy = new Enemy("assets/crumb.png", 330, 65, 12, 1);  // Starting position for each enemy
+  const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 1);  // Starting position for each enemy
+  
   enemies.push(enemy);
   console.log(enemies);
   }
   if(n==2){
-    const enemy = new Enemy("assets/crumb.png", 330, 65, 12, 2);  // Starting position for each enemy
+    const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 2);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
     }
   if(n==3){
-    const enemy = new Enemy("assets/crumb.png", 330, 65, 24, 1);  // Starting position for each enemy
+    const enemy = new Enemy("assets/flypngs/walk5.png", 330, 65, 24, 1);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
       }
 }
+
+
+let index1 = 0; // For run images
+let direction1 = 1; // 1 means forward, -1 means backward
+
+// Function to handle the looping animation for run images
+function runWhileLoop1() {
+  enemies.forEach(enemy => {
+    if (enemy.speed == 12) {
+      // Update the enemy's image based on the current index
+      enemy.png = runImages[index1];
+      console.log(index1);
+      // Apply the new image to the enemy's element
+      enemy.element.style.transition = 'background-image 0.3s ease-in-out';
+      if (enemy.png) {
+        enemy.element.style.backgroundImage = `url(${enemy.png})`;
+    } else {
+        console.error('Invalid image URL');
+    }
+    }
+  });
+
+  // Update the index for the next frame
+  index1 += direction1;
+
+  // Reverse the direction when reaching bounds
+  if (index1 === runImages.length - 1 || index1 === 0) {
+    direction1 *= -1;
+  }
+
+  // Repeat the loop every 200ms
+  setTimeout(runWhileLoop1, 200);
+}
+
+let index2 = 0; // For fly images
+let direction2 = 1; // 1 means forward, -1 means backward
+
+// Function to handle the looping animation for fly images
+function runWhileLoop2() {
+  enemies.forEach(enemy => {
+    if (enemy.speed == 24) {
+      // Update the enemy's image based on the current index
+      enemy.png = flyImages[index2];
+      // Apply the new image to the enemy's element
+      enemy.element.style.backgroundImage = `url(${enemy.png})`;
+    }
+  });
+
+  // Update the index for the next frame
+  index2 += direction2;
+
+  // Reverse the direction when reaching bounds
+  if (index2 === flyImages.length - 1 || index2 === 0) {
+    direction2 *= -1;
+  }
+
+  setTimeout(runWhileLoop2, 200);
+}
+
+// // Start both loops
+runWhileLoop1();
+runWhileLoop2();
 
 // Function to animate all enemies
 function animate2() {
   // Loop over each enemy and advance their position
   enemies.forEach(enemy => enemy.advance());
   requestAnimationFrame(animate2);  // Continue the animation loop
+
 }
 
 // Main game initialization
