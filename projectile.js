@@ -5,12 +5,14 @@ class dartboard{
     this.currentY = -1;
     this.counter = 1;
     this.velocity = "y+";
+    this.speed = 0;
+    this.health = 0;
   }
 }
 
-lives = 5
+lives = 5;
 var livesdisplay = document.getElementById('lives-overlay');
-
+var wavedisplay = document.getElementById('waveslabel');
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
 var moneycount = 150000;
@@ -29,22 +31,42 @@ class Tile {
 
   // Set the class of the tile based on its ID
   setClass() {
-    if (this.tileId === 1) {
-      this.element.classList.add('tile-1');
-    } else if (this.tileId === 2){
-      this.element.classList.add('tile-2');
-    }else if (this.tileId === 3){
-      this.element.classList.add('tile-3');
-    }else if (this.tileId === 4){
-      this.element.classList.add('tile-4');
-    }else if (this.tileId === 5){
-      this.element.classList.add('tile-5');
+    let invalidTiles = [30, 31, 21, 22, 42, 43, 33, 34, 8, 9, 10, 25, 26, 27, 28, 29, 37, 38, 39, 40, 41, 64, 65, 66, 67, 73, 74, 75, 76, 77, 78, 79, 80, 85, 86, 87, 88, 89, 90, 91, 92, 97, 98, 99, 100, 101, 102, 103, 109, 110, 111, 112, 113, 121, 122, 123, 133, 134, 135];
+    console.log("tile Id: ", `${this.tileId}`);
+    // if(invalidTiles.indexOf(this.tileId) < 0){
+    //   this.tileId == 2;
+    //   this.element.classList.add('tile-2');
+    // // }
+    // // if (this.tileId === 1) {
+    // //   this.element.classList.add('tile-1');
+    // // } else if (this.tileId === 2){
+    // //   this.element.classList.add('tile-2');
+    // // }else if (this.tileId === 99){
+    // //   this.element.classList.add('tile-99');
+    // // }else if (this.tileId === 4){
+    // //   this.element.classList.add('tile-4');
+    // // }else if (this.tileId === 5){
+    // //   this.element.classList.add('tile-5');
+    // }else{
+    //   this.element.classList.add('tile-1');
+    // }
+    if (invalidTiles.indexOf(this.tileId) < 0) {
+      this.element.classList.add('tile-2'); // Set valid tile style
+    } else {
+      this.element.classList.add('tile-1'); // Set invalid tile style
+      this.element.classList.add('invalid'); // Add a class to visually mark the tile as invalid
     }
   }
 
   // Method to check if a tower can be placed on this tile
   canPlaceTower() {
-    return (this.tileId === 2 && moneycount >= 15);  // Example: Only allow towers on tile-2
+    let invalidTiles = [
+      30, 31, 21, 22, 42, 43, 33, 34, 8, 9, 10, 25, 26, 27, 28, 29,
+      37, 38, 39, 40, 41, 64, 65, 66, 67, 73, 74, 75, 76, 77, 78, 79,
+      80, 85, 86, 87, 88, 89, 90, 91, 92, 97, 98, 99, 100, 101, 102,
+      103, 109, 110, 111, 112, 113, 121, 122, 123, 133, 134, 135
+    ];
+    return (invalidTiles.indexOf(this.tileId) < 0 && moneycount >= 15);  // Example: Only allow towers on tile-2
   }
 
   // Method to place a tower on this tile
@@ -54,19 +76,27 @@ class Tile {
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
       moneycount -= 15
       moneydisplay.innerHTML = `Money: $${moneycount}`;
-      const bullet = new Bullet(tower, getTarget());
+      const bullet = new Bullet(tower, getTarget(), towerType.seedPng, towerType.speed);
       bullet.hone();    
       function animate() {
+        console.log(".")
         bullet.target = getTarget();
         bullet.shoot();  // Update bullet position
         for (let enemy of enemies) {
           if (bullet.checkCollision(enemy)) {
-            enemy.health -=1;
             console.log(enemy.health)
-            if (enemy.health <= 0){
-              enemy.delete();
+            if (bullet.png == 'assets/RedBullet.png'){
+              enemy.health -=1;
+              if(enemy.health <= 0){
+                enemy.delete();
+                moneycount += 5;
+              }
             }
-            moneycount += 5;
+            if(bullet.png == 'assets/BlueBullet.png'){
+              enemy.speed = Math.max(enemy.speed*.75, 3);
+              bullet.target = getTarget();
+            }
+            
             moneydisplay.innerHTML = `Money: $${moneycount}`;
             
 
@@ -84,9 +114,11 @@ class Tile {
 }
 
 class TowerType{
-  constructor(type, png){
+  constructor(type, png, speed, seedPng){
     this.type = type;
     this.png = png;
+    this.speed = speed;
+    this.seedPng = seedPng;
   }
 
   displayInfo() {
@@ -99,7 +131,7 @@ var selectedTower = 1
 
 var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
-let towerType = new TowerType(1, 'assets/block.png');
+let towerType = new TowerType(1, 'assets/block.png', 20, 'assets/BlueBullet.png');
 
 tower1.addEventListener("click", function() {
   // Ensure both towers are reset
@@ -111,7 +143,7 @@ tower1.addEventListener("click", function() {
   tower2.classList.add("answerBtnsOff");
   
   selectedTower = 1;
-  towerType = new TowerType(selectedTower, 'assets/block.png');
+  towerType = new TowerType(selectedTower, 'assets/block.png', 20, 'assets/BlueBullet.png');
   towerType.displayInfo();
 });
 
@@ -125,7 +157,7 @@ tower2.addEventListener("click", function() {
   tower1.classList.add("answerBtnsOff");
   
   selectedTower = 2;
-  towerType = new TowerType(selectedTower, 'assets/block2.png');
+  towerType = new TowerType(selectedTower, 'assets/block2.png', 10, 'assets/RedBullet.png');
   towerType.displayInfo();
 });
 
@@ -148,9 +180,9 @@ tower2.addEventListener("mouseout", function() {
 });
 
 class Tower {
-  constructor(png, tile) {
+  constructor(type, png, tile) {
       
-      // this.type = type;
+      this.type = type;
       this.tile = tile; // The Tile object
       this.png = png; // The image for the tower
       this.element = this.createTowerElement(); // Create the DOM element for the tower
@@ -173,8 +205,9 @@ class Tower {
 
 // Bullet class definition
 class Bullet {
-    constructor(tower, enemy) {
+    constructor(tower, enemy, png, speed) {
       this.target = enemy;
+      this.png = png;
       this.spx = 0;
       this.spy = 0;
       this.homeX = tower.x;        // Initial X position (where the bullet starts)
@@ -182,13 +215,13 @@ class Bullet {
       this.currentX = tower.x;     // Current X position
       this.currentY = tower.y;     // Current Y position
       this.element = this.createBulletElement();  // Create the DOM element
-      this.overallSpeed = 20
+      this.overallSpeed = speed;
     }
   
     createBulletElement() {
       const bullet = document.createElement('div');
       bullet.classList.add('bullet');
-      bullet.style.backgroundImage = 'url(assets/crumb.png)';
+      bullet.style.backgroundImage = `url(${this.png})`;
       bullet.style.backgroundSize = 'cover';
       bullet.style.position = 'absolute';
       bullet.style.left = `${this.currentX}px`;
@@ -202,16 +235,16 @@ class Bullet {
       let y = this.target.currentY - this.homeY;
       
       const directionVelocity = this.target.velocity;
-      
+      let factorr = this.target.speed*10
       // Adjust x or y based on the direction
       if (directionVelocity === "y+") {
-          y += 60;
+          y += factorr;
       } else if (directionVelocity === "x+") {
-          x += 60;
+          x += factorr;
       } else if (directionVelocity === "y-") {
-          y -= 60;
+          y -= factorr;
       } else if (directionVelocity === "x-") {
-          x -= 60;
+          x -= factorr;
       }
       
       // Calculate the Euclidean distance (magnitude) between the points
@@ -246,7 +279,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX >  1300|| this.currentY >  1200|| this.currentX <  0|| this.currentY < 0) {
+        if (this.currentX >  1500|| this.currentY >  750|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -319,6 +352,9 @@ class Enemy {
       this.delete()
       lives -= 1
       livesdisplay.innerHTML = `Lives: ${lives}`;
+      if(lives == 0){
+        window.location.replace("gameOverLose.html");
+      }
     }else{
       this.counter ++;
     }
@@ -332,29 +368,96 @@ class Enemy {
 let enemies = [];
 
 // Function to spawn a new enemy and add it to the enemies array
+var runImages = ["assets/runpngs/fly1.png", "assets/runpngs/fly2.png", "assets/runpngs/fly3.png", "assets/runpngs/fly4.png", "assets/runpngs/fly5.png", "assets/runpngs/fly6.png", "assets/runpngs/fly5.png", "assets/runpngs/fly4.png", "assets/runpngs/fly3.png", "assets/runpngs/fly2.png", "assets/runpngs/fly1.png"]
+var flyImages = ["assets/flypngs/walk1.png", "assets/flypngs/walk2.png", "assets/flypngs/walk3.png", "assets/flypngs/walk4.png", "assets/flypngs/walk5.png", "assets/flypngs/walk6.png", "assets/flypngs/walk7.png", "assets/flypngs/walk8.png", "assets/flypngs/walk9.png", "assets/flypngs/walk10.png"]
+
 function spawnEnemy(n) {
   if(n==1){
-  const enemy = new Enemy("assets/crumb.png", 330, 65, 15, 1);  // Starting position for each enemy
+  const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 1);  // Starting position for each enemy
+  
   enemies.push(enemy);
   console.log(enemies);
   }
   if(n==2){
-    const enemy = new Enemy("assets/crumb.png", 330, 65, 15, 2);  // Starting position for each enemy
+    const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 2);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
     }
   if(n==3){
-    const enemy = new Enemy("assets/crumb.png", 330, 65, 30, 1);  // Starting position for each enemy
+    const enemy = new Enemy("assets/flypngs/walk5.png", 330, 65, 24, 1);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
       }
 }
+
+
+let index1 = 0; // For run images
+let direction1 = 1; // 1 means forward, -1 means backward
+
+// Function to handle the looping animation for run images
+function runWhileLoop1() {
+  enemies.forEach(enemy => {
+    if (enemy.speed == 12) {
+      // Update the enemy's image based on the current index
+      enemy.png = runImages[index1];
+      console.log(index1);
+      // Apply the new image to the enemy's element
+      enemy.element.style.transition = 'background-image 0.3s ease-in-out';
+      if (enemy.png) {
+        enemy.element.style.backgroundImage = `url(${enemy.png})`;
+    } else {
+        console.error('Invalid image URL');
+    }
+    }
+  });
+
+  // Update the index for the next frame
+  index1 += direction1;
+
+  // Reverse the direction when reaching bounds
+  if (index1 === runImages.length - 1 || index1 === 0) {
+    direction1 *= -1;
+  }
+
+  // Repeat the loop every 200ms
+  setTimeout(runWhileLoop1, 200);
+}
+
+let index2 = 0; // For fly images
+let direction2 = 1; // 1 means forward, -1 means backward
+
+// Function to handle the looping animation for fly images
+function runWhileLoop2() {
+  enemies.forEach(enemy => {
+    if (enemy.speed == 24) {
+      // Update the enemy's image based on the current index
+      enemy.png = flyImages[index2];
+      // Apply the new image to the enemy's element
+      enemy.element.style.backgroundImage = `url(${enemy.png})`;
+    }
+  });
+
+  // Update the index for the next frame
+  index2 += direction2;
+
+  // Reverse the direction when reaching bounds
+  if (index2 === flyImages.length - 1 || index2 === 0) {
+    direction2 *= -1;
+  }
+
+  setTimeout(runWhileLoop2, 200);
+}
+
+// // Start both loops
+runWhileLoop1();
+runWhileLoop2();
 
 // Function to animate all enemies
 function animate2() {
   // Loop over each enemy and advance their position
   enemies.forEach(enemy => enemy.advance());
   requestAnimationFrame(animate2);  // Continue the animation loop
+
 }
 
 // Main game initialization
@@ -364,6 +467,10 @@ window.onload = function() {
 
   // Wave1
   var enemyCounter = 0;
+  wavedisplay.innerHTML = `WAVE 1`;
+  setTimeout(() => {
+    wavedisplay.style = "display: none";
+  }, "3000");
   const interval1 = setInterval(() => {
     spawnEnemy(1);
     enemyCounter++;
@@ -376,6 +483,11 @@ window.onload = function() {
   
   function startWave2() {
     enemyCounter = 0;  // Reset counter for Wave 2
+    wavedisplay.style = "display: unset";
+    wavedisplay.innerHTML = `WAVE 2`;
+    setTimeout(() => {
+      wavedisplay.style = "display: none";
+    }, "3000");
     const interval2 = setInterval(() => {
       spawnEnemy(1);
       enemyCounter++;
@@ -401,6 +513,12 @@ window.onload = function() {
     }, 2000);
   }
   function startWave3() {
+    wavedisplay.style = "display: unset";
+    wavedisplay.innerHTML = `WAVE 3`;
+    setTimeout(() => {
+      wavedisplay.style = "display: none";
+    }, "3000");
+    
     enemyCounter = 0;  // Reset counter for Wave 3
     const interval4 = setInterval(() => {
       spawnEnemy(2);
@@ -413,6 +531,11 @@ window.onload = function() {
       }
     }, 2000);}
     function startWave4() {
+      wavedisplay.style = "display: unset";
+      wavedisplay.innerHTML = `WAVE 4`;
+      setTimeout(() => {
+        wavedisplay.style = "display: none";
+      }, "3000");
       enemyCounter = 0;  // Reset counter for Wave 3
       const interval5 = setInterval(() => {
         spawnEnemy(3);
@@ -425,7 +548,12 @@ window.onload = function() {
         }
       }, 2000);}
       function startWave5() {
+        wavedisplay.style = "display: unset";
         enemyCounter = 0;  // Reset counter for Wave 3
+        wavedisplay.innerHTML = `FINAL WAVE!!!!`;
+        setTimeout(() => {
+          wavedisplay.style = "display: none";
+        }, "3000");
         const interval6 = setInterval(() => {
           spawnEnemy(2);
           enemyCounter++;
@@ -463,7 +591,7 @@ function getTarget() {
 
 
 // Fetch the map data and create tiles
-fetch('finalmap.json')
+fetch('mapfinal.json')
   .then(response => {
     if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -497,7 +625,7 @@ fetch('finalmap.json')
         tileDiv.addEventListener('click', () => {
             console.log(`Tile ${tileId} clicked!`);
             if (tile.canPlaceTower()) {
-                const tower = new Tower(towerType.png, tile); // Create a new Tower
+                const tower = new Tower(towerType.type, towerType.png, tile); // Create a new Tower
                 tile.placeTower(tower); // Place the tower on the clicked tile
             } else {
                 console.log('Cannot place tower here!');

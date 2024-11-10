@@ -15,34 +15,27 @@ body {
   gap: 0;
   width: max-content;
   margin: auto;
+  z-index: 0;
+}
+
+img {
+  grid-column: 1 / -1;  /* Span across all columns (1st to the last column) */
+  grid-row: 1 / -1;
+  visibility: visible;
+  position: absolute;
+  z-index: -1;
+  width: max-content;         /* Make the image stretch to fit the width of the grid cell */
+  height: 100%;
+  object-fit: cover;
 }
 
 .tile {
   width: 5vh;
   height: 5vh;
-  background-color: #cccccc;
+  background-color: #cccccc00;
   /* border: 1px solid #aaa;  removes line between tiles */
   position: relative;  /* Add relative positioning */
   z-index: 1;
-}
-
-
-.tile-1 {
-  background-color: rgb(57, 39, 0);    /* Example: Tile ID 1 could be red */
-}
-
-.tile-2 {
-  background-color: green;
-}
-.tile-3 {
-  background-color: rgb(107, 193, 255);
-}
-
-.tile-4 {
-  background-color: rgb(8, 63, 15);
-}
-.tile-5 {
-  background-color: rgb(60, 49, 10);
 }
 
 .tower {
