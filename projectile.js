@@ -1,10 +1,19 @@
 // Some stats
+class dartboard{
+  constructor(){
+    this.currentX = -1;  // Initialize position
+    this.currentY = -1;
+    this.counter = 1;
+    this.velocity = "y+";
+  }
+}
+
 lives = 5
 var livesdisplay = document.getElementById('lives-overlay');
 
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 15;
+var moneycount = 150000;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
 livesdisplay.innerHTML = `Lives: ${lives}`;
@@ -45,9 +54,10 @@ class Tile {
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
       moneycount -= 15
       moneydisplay.innerHTML = `Money: $${moneycount}`;
-      const bullet = new Bullet(tower);
+      const bullet = new Bullet(tower, enemies[0]);
 
       function animate() {
+        bullet.target = getTarget();
         bullet.shoot();  // Update bullet position
         for (let enemy of enemies) {
           if (bullet.checkCollision(enemy)) {
@@ -55,7 +65,7 @@ class Tile {
             moneycount += 5;
             moneydisplay.innerHTML = `Money: $${moneycount}`;
 
-            bullet.target = enemies[0];
+            bullet.target = getTarget();
           }
         } 
         bullet.hone();       
@@ -98,7 +108,6 @@ tower1.addEventListener("click", function() {
   
   selectedTower = 1;
   towerType = new TowerType(selectedTower, 'assets/block.png');
-  console.log(selectedTower);
   towerType.displayInfo();
 });
 
@@ -113,7 +122,6 @@ tower2.addEventListener("click", function() {
   
   selectedTower = 2;
   towerType = new TowerType(selectedTower, 'assets/block2.png');
-  console.log(selectedTower);
   towerType.displayInfo();
 });
 
@@ -161,8 +169,8 @@ class Tower {
 
 // Bullet class definition
 class Bullet {
-    constructor(tower) {
-      this.target = enemies[0];
+    constructor(tower, enemy) {
+      this.target = enemy;
       this.spx = 0;
       this.spy = 0;
       this.homeX = tower.x;        // Initial X position (where the bullet starts)
@@ -170,6 +178,7 @@ class Bullet {
       this.currentX = tower.x;     // Current X position
       this.currentY = tower.y;     // Current Y position
       this.element = this.createBulletElement();  // Create the DOM element
+      this.overallSpeed = 20
     }
   
     createBulletElement() {
@@ -181,12 +190,9 @@ class Bullet {
       bullet.style.left = `${this.currentX}px`;
       bullet.style.top = `${this.currentY}px`;
       document.body.appendChild(bullet);
-      this.hone();
       return bullet;
     }
     hone() {
-      console.log(this.target.currentX);
-      console.log(this.homeX);
       
       let x = this.target.currentX - this.homeX;
       let y = this.target.currentY - this.homeY;
@@ -195,21 +201,21 @@ class Bullet {
       
       // Adjust x or y based on the direction
       if (directionVelocity === "y+") {
-          y += 10;
+          y += 60;
       } else if (directionVelocity === "x+") {
-          x += 10;
+          x += 60;
       } else if (directionVelocity === "y-") {
-          y -= 10;
+          y -= 60;
       } else if (directionVelocity === "x-") {
-          x -= 10;
+          x -= 60;
       }
       
       // Calculate the Euclidean distance (magnitude) between the points
       let sqrt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)); // or you can use x**2 + y**2 and then Math.sqrt
       
       // Normalize the velocity components
-      this.spx = (x / sqrt)*120;
-      this.spy = (y / sqrt)*120;
+      this.spx = (x / sqrt)*this.overallSpeed;
+      this.spy = (y / sqrt)*this.overallSpeed;
   }
   
   checkCollision(enemy) {
@@ -345,6 +351,16 @@ window.onload = function() {
   // Start the animation loop
   animate2();
 };
+
+var Dartboard = new dartboard();
+function getTarget() {
+  // Check if there's at least one enemy in the list
+  if (enemies.length === 0){
+    return Dartboard;
+  }else{
+    return enemies[0];
+  }
+}
 
 
 // Fetch the map data and create tiles
