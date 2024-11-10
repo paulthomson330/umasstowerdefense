@@ -1,7 +1,7 @@
 // Tile class definition
 
 // Fetch the map data and create tiles
-fetch('maptemplate.json')
+fetch('finalmap.json')
   .then(response => {
     if (!response.ok) {
         throw new Error('Network response was not ok');

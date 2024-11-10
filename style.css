@@ -27,11 +27,21 @@ body {
 
 
 .tile-1 {
-  background-color: rgb(151, 27, 47);    /* Example: Tile ID 1 could be red */
+  background-color: rgb(57, 39, 0);    /* Example: Tile ID 1 could be red */
 }
 
 .tile-2 {
-  background-color: rgb(7, 121, 7);  /* Example: Tile ID 2 could be green */
+  background-color: green;
+}
+.tile-3 {
+  background-color: rgb(107, 193, 255);
+}
+
+.tile-4 {
+  background-color: rgb(8, 63, 15);
+}
+.tile-5 {
+  background-color: rgb(60, 49, 10);
 }
 
 .tower {
@@ -46,4 +56,11 @@ body {
   height: 1vh; /* example size */
   position: absolute;
   z-index: 20;
+}
+
+.enemy {
+  width: 3vh; /* example size */
+  height: 3vh; /* example size */
+  position: absolute;
+  z-index: 15;
 }
