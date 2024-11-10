@@ -15,9 +15,9 @@ var livesdisplay = document.getElementById('lives-overlay');
 var wavedisplay = document.getElementById('waveslabel');
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 150000;
+var moneycount = 60;
 
-moneydisplay.innerHTML = `Money: $${moneycount}`;
+moneydisplay.innerHTML = `Dining Dollars: $${moneycount}`;
 livesdisplay.innerHTML = `Lives: ${lives}`;
 
 class Tile {
@@ -75,7 +75,7 @@ class Tile {
       this.placedTower = tower; // The tower is placed on this tile
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
       moneycount -= 15
-      moneydisplay.innerHTML = `Money: $${moneycount}`;
+      moneydisplay.innerHTML = `Dining Dollars: $${moneycount}`;
       const bullet = new Bullet(tower, getTarget(), towerType.seedPng, towerType.speed);
       bullet.hone();    
       function animate() {
@@ -97,7 +97,7 @@ class Tile {
               bullet.target = getTarget();
             }
             
-            moneydisplay.innerHTML = `Money: $${moneycount}`;
+            moneydisplay.innerHTML = `Dining Dollars: $${moneycount}`;
             
 
             bullet.target = getTarget();
@@ -279,7 +279,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX >  1500|| this.currentY >  750|| this.currentX <  0|| this.currentY < 0) {
+        if (this.currentX >  1500|| this.currentY >  800|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -287,12 +287,12 @@ class Bullet {
     }
 }
 
-var firstylimit = 630;
-var firstxlimit = 688;
-var secondylimit = 100;
+var firstylimit = 650;
+var firstxlimit = 713.2;
+var secondylimit = 84;
 var secondxlimit = 1250;
-var thirdylimit = 580;
-var thirdxlimit = 950;
+var thirdylimit = 570;
+var thirdxlimit = 970;
 var endlimit = 450;
 // Enemy class with fixed advance method
 class Enemy {
@@ -313,6 +313,8 @@ class Enemy {
     enemy.style.backgroundImage = `url(${this.png})`;
     enemy.style.backgroundSize = 'cover';
     enemy.style.position = 'absolute';
+    enemy.style.width = '50px'
+    enemy.style.height = '50px'
     enemy.style.left = `${this.currentX}px`;
     enemy.style.top = `${this.currentY}px`;
     document.body.appendChild(enemy);
@@ -373,18 +375,18 @@ var flyImages = ["assets/flypngs/walk1.png", "assets/flypngs/walk2.png", "assets
 
 function spawnEnemy(n) {
   if(n==1){
-  const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 1);  // Starting position for each enemy
+  const enemy = new Enemy("assets/runpngs/fly1.png", 300, 65, 8, 1);  // Starting position for each enemy
   
   enemies.push(enemy);
   console.log(enemies);
   }
   if(n==2){
-    const enemy = new Enemy("assets/runpngs/fly1.png", 330, 65, 12, 2);  // Starting position for each enemy
+    const enemy = new Enemy("assets/runpngs/fly1.png", 300, 65, 8, 3);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
     }
   if(n==3){
-    const enemy = new Enemy("assets/flypngs/walk5.png", 330, 65, 24, 1);  // Starting position for each enemy
+    const enemy = new Enemy("assets/flypngs/walk5.png", 300, 65, 16, 1);  // Starting position for each enemy
     enemies.push(enemy);
     console.log(enemies);
       }
@@ -397,11 +399,12 @@ let direction1 = 1; // 1 means forward, -1 means backward
 // Function to handle the looping animation for run images
 function runWhileLoop1() {
   enemies.forEach(enemy => {
-    if (enemy.speed == 12) {
+    if (enemy.speed == 8) {
       // Update the enemy's image based on the current index
       enemy.png = runImages[index1];
       console.log(index1);
-      // Apply the new image to the enemy's element
+      // Apply the new image to the enemy's element'
+      
       enemy.element.style.transition = 'background-image 0.3s ease-in-out';
       if (enemy.png) {
         enemy.element.style.backgroundImage = `url(${enemy.png})`;
@@ -429,7 +432,7 @@ let direction2 = 1; // 1 means forward, -1 means backward
 // Function to handle the looping animation for fly images
 function runWhileLoop2() {
   enemies.forEach(enemy => {
-    if (enemy.speed == 24) {
+    if (enemy.speed == 16) {
       // Update the enemy's image based on the current index
       enemy.png = flyImages[index2];
       // Apply the new image to the enemy's element
@@ -463,7 +466,7 @@ function animate2() {
 // Main game initialization
 window.onload = function() {
   // Start by spawning the first enemy
-  spawnEnemy(1);
+
 
   // Wave1
   var enemyCounter = 0;
@@ -479,7 +482,7 @@ window.onload = function() {
       clearInterval(interval1);  // Stop Wave 1 interval
       startWave2();  // Start Wave 2
     }
-  }, 2000);
+  }, 1500);
   
   function startWave2() {
     enemyCounter = 0;  // Reset counter for Wave 2
@@ -496,7 +499,7 @@ window.onload = function() {
         clearInterval(interval2);  // Stop Wave 2 interval
         startWave2Part2();  // Start Wave 3
       }
-    }, 2000);
+    }, 1000);
   }
   
   function startWave2Part2() {
@@ -510,7 +513,7 @@ window.onload = function() {
         startWave3();
         // You can start additional waves or other logic here
       }
-    }, 2000);
+    }, 1000);
   }
   function startWave3() {
     wavedisplay.style = "display: unset";
@@ -529,7 +532,7 @@ window.onload = function() {
         startWave4()
         // You can start additional waves or other logic here
       }
-    }, 2000);}
+    }, 1000);}
     function startWave4() {
       wavedisplay.style = "display: unset";
       wavedisplay.innerHTML = `WAVE 4`;
@@ -546,7 +549,7 @@ window.onload = function() {
           startWave5();
           // You can start additional waves or other logic here
         }
-      }, 2000);}
+      }, 1000);}
       function startWave5() {
         wavedisplay.style = "display: unset";
         enemyCounter = 0;  // Reset counter for Wave 3
@@ -562,7 +565,7 @@ window.onload = function() {
             clearInterval(interval6);  // Stop Wave 5 interval
             // You can start additional waves or other logic here
           }
-        }, 2000);
+        }, 100);
         enemyCounter = 0;  // Reset counter for Wave 3
         const interval7 = setInterval(() => {
           spawnEnemy(3);
@@ -570,9 +573,20 @@ window.onload = function() {
           console.log("Wave 5 Part 2- Enemies spawned:", enemyCounter);
           if (enemyCounter === 10) {
             clearInterval(interval7);  // Stop Wave 5 interval
+            interval8();
+
             // You can start additional waves or other logic here
           }
-        }, 2000);
+          
+        }, 500);
+        const interval8 = setInterval(() => {
+          if(lives >0 && enemies.length === 0){
+            console.log("A");
+            window.location.replace("gameOver.html");
+          }
+        }, 100);
+        
+        
   }
       
   // Start the animation loop

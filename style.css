@@ -70,6 +70,7 @@ img {
   padding: 20px;  /* Padding around the text */
   border-radius: 5px; /* Optional: rounded corners */
   z-index: 10;  /* Ensure text appears above the grid */
+  text-align: center  ;
 }
 
 #towerselection {
@@ -79,7 +80,7 @@ img {
   transform: translate(-50%, -50%);  /* Center the text */
   font-size: 2rem;  /* Adjust the font size */
   color: rgb(0, 0, 0);  /* Text color */
-  background-color: rgba(255, 255, 255, 1);  /* Semi-transparent background */
+  background-color: rgba(255, 255, 255, 0);  /* Semi-transparent background */
   padding: 20px;  /* Padding around the text */
   border-radius: 5px; /* Optional: rounded corners */
   z-index: 10;  /* Ensure text appears above the grid */
@@ -96,7 +97,7 @@ img {
 }
 .answerBtnsOn
 {
-    BACKGROUND-COLOR: GREEN;
+    BACKGROUND-COLOR: MAROON;
     BORDER-BOTTOM: #666666 1px solid;
     BORDER-LEFT: #666666 1px solid;
     BORDER-RIGHT: #666666 1px solid;
@@ -145,4 +146,40 @@ img {
   padding: 20px;  /* Padding around the text */
   border-radius: 5px; /* Optional: rounded corners */
   z-index: 10;  /* Ensure text appears above the grid */
+}
+
+#tower1{
+  position:absolute;
+  top:50%;
+  right:0%;
+  height: 20px;
+  width: 25px;
+}
+#tower2{
+  position:absolute;
+  top:50%;
+  right:180%;
+  height: 20px;
+  width: 25px;
+}
+#lobster{
+  position:absolute;
+  z-index: 2;
+  width:40px;
+  height:40px;
+  top:700px;
+  right:510px;
+}
+#box{
+  position:absolute;
+  z-index: 5;
+  width:40px;
+  height:40px;
+  top:700px;
+  right:440px;
+}
+#Shop{
+position:absolute;
+bottom: 38px;
+right: 5px;
 }
