@@ -78,7 +78,7 @@ var selectedTower = 1
 
 var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
-let towerType = new TowerType(1, 'block.png');
+let towerType = new TowerType(1, 'assets/block.png');
 
 tower1.addEventListener("click", function() {
   // Ensure both towers are reset
@@ -90,7 +90,7 @@ tower1.addEventListener("click", function() {
   tower2.classList.add("answerBtnsOff");
   
   selectedTower = 1;
-  towerType = new TowerType(selectedTower, 'block.png');
+  towerType = new TowerType(selectedTower, 'assets/block.png');
   console.log(selectedTower);
   towerType.displayInfo();
 });
@@ -105,7 +105,7 @@ tower2.addEventListener("click", function() {
   tower1.classList.add("answerBtnsOff");
   
   selectedTower = 2;
-  towerType = new TowerType(selectedTower, 'block2.png');
+  towerType = new TowerType(selectedTower, 'assets/block2.png');
   console.log(selectedTower);
   towerType.displayInfo();
 });
@@ -168,7 +168,7 @@ class Bullet {
     createBulletElement() {
       const bullet = document.createElement('div');
       bullet.classList.add('bullet');
-      bullet.style.backgroundImage = 'url(crumb.png)';
+      bullet.style.backgroundImage = 'url(assets/crumb.png)';
       bullet.style.backgroundSize = 'cover';
       bullet.style.position = 'absolute';
       bullet.style.left = `${this.currentX}px`;
@@ -229,7 +229,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX > window.innerWidth || this.currentY > window.innerHeight || this.currentX < 0 || this.currentY < 0) {
+        if (this.currentX >  1300|| this.currentY >  600|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -237,13 +237,13 @@ class Bullet {
     }
 }
 
-var firstylimit = 2550;
-var firstxlimit = 2750;
-var secondylimit = 350;
-var secondxlimit = 4970;
-var thirdylimit = 2250;
-var thirdxlimit = 3700;
-var endlimit = 1800;
+var firstylimit = 630;
+var firstxlimit = 688;
+var secondylimit = 100;
+var secondxlimit = 1250;
+var thirdylimit = 580;
+var thirdxlimit = 950;
+var endlimit = 450;
 // Enemy class with fixed advance method
 class Enemy {
   constructor(png, curx, cury) {
@@ -313,7 +313,7 @@ let enemies = [];
 
 // Function to spawn a new enemy and add it to the enemies array
 function spawnEnemy() {
-  const enemy = new Enemy("crumb.png", 1320, 350);  // Starting position for each enemy
+  const enemy = new Enemy("assets/crumb.png", 330, 65);  // Starting position for each enemy
   enemies.push(enemy);
   console.log(enemies);
 }
