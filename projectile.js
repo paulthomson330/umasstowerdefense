@@ -31,24 +31,42 @@ class Tile {
 
   // Set the class of the tile based on its ID
   setClass() {
-    if (this.tileId === 1) {
-      this.element.classList.add('tile-1');
-    } else if (this.tileId === 2){
-      this.element.classList.add('tile-2');
-    }else if (this.tileId === 99){
-      this.element.classList.add('tile-99');
-    }else if (this.tileId === 4){
-      this.element.classList.add('tile-4');
-    }else if (this.tileId === 5){
-      this.element.classList.add('tile-5');
-    }else{
-      this.element.classList.add('tile-6');
+    let invalidTiles = [30, 31, 21, 22, 42, 43, 33, 34, 8, 9, 10, 25, 26, 27, 28, 29, 37, 38, 39, 40, 41, 64, 65, 66, 67, 73, 74, 75, 76, 77, 78, 79, 80, 85, 86, 87, 88, 89, 90, 91, 92, 97, 98, 99, 100, 101, 102, 103, 109, 110, 111, 112, 113, 121, 122, 123, 133, 134, 135];
+    console.log("tile Id: ", `${this.tileId}`);
+    // if(invalidTiles.indexOf(this.tileId) < 0){
+    //   this.tileId == 2;
+    //   this.element.classList.add('tile-2');
+    // // }
+    // // if (this.tileId === 1) {
+    // //   this.element.classList.add('tile-1');
+    // // } else if (this.tileId === 2){
+    // //   this.element.classList.add('tile-2');
+    // // }else if (this.tileId === 99){
+    // //   this.element.classList.add('tile-99');
+    // // }else if (this.tileId === 4){
+    // //   this.element.classList.add('tile-4');
+    // // }else if (this.tileId === 5){
+    // //   this.element.classList.add('tile-5');
+    // }else{
+    //   this.element.classList.add('tile-1');
+    // }
+    if (invalidTiles.indexOf(this.tileId) < 0) {
+      this.element.classList.add('tile-2'); // Set valid tile style
+    } else {
+      this.element.classList.add('tile-1'); // Set invalid tile style
+      this.element.classList.add('invalid'); // Add a class to visually mark the tile as invalid
     }
   }
 
   // Method to check if a tower can be placed on this tile
   canPlaceTower() {
-    return (this.tileId === 2 && moneycount >= 15);  // Example: Only allow towers on tile-2
+    let invalidTiles = [
+      30, 31, 21, 22, 42, 43, 33, 34, 8, 9, 10, 25, 26, 27, 28, 29,
+      37, 38, 39, 40, 41, 64, 65, 66, 67, 73, 74, 75, 76, 77, 78, 79,
+      80, 85, 86, 87, 88, 89, 90, 91, 92, 97, 98, 99, 100, 101, 102,
+      103, 109, 110, 111, 112, 113, 121, 122, 123, 133, 134, 135
+    ];
+    return (invalidTiles.indexOf(this.tileId) < 0 && moneycount >= 15);  // Example: Only allow towers on tile-2
   }
 
   // Method to place a tower on this tile
@@ -334,9 +352,9 @@ class Enemy {
       this.delete()
       lives -= 1
       livesdisplay.innerHTML = `Lives: ${lives}`;
-      //if(lives == 0){
-        //window.location.replace("gameOverLose.html");
-      //}
+      if(lives == 0){
+        window.location.replace("gameOverLose.html");
+      }
     }else{
       this.counter ++;
     }
