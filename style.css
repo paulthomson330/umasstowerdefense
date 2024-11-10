@@ -64,7 +64,7 @@ body {
 #towerselection {
   position: absolute;  /* Position the text relative to the grid */
   top: 90%;  /* Adjust the vertical position (30% from the top) */
-  left: 70%; /* Adjust the horizontal position (50% from the left) */
+  left: 69.6%; /* Adjust the horizontal position (50% from the left) */
   transform: translate(-50%, -50%);  /* Center the text */
   font-size: 2rem;  /* Adjust the font size */
   color: rgb(0, 0, 0);  /* Text color */
@@ -81,9 +81,7 @@ body {
     BORDER-LEFT: #666666 1px solid;
     BORDER-RIGHT: #666666 1px solid;
     BORDER-TOP: #666666 1px solid;  
-    COLOR: #ccc;
     FONT: 11px Verdana,Arial,Helvetica,sans-serif;
-    font-weight:bold;
 }
 .answerBtnsOn
 {
@@ -92,7 +90,19 @@ body {
     BORDER-LEFT: #666666 1px solid;
     BORDER-RIGHT: #666666 1px solid;
     BORDER-TOP: #666666 1px solid;  
-    COLOR: #ffffff;
     FONT: 11px Verdana,Arial,Helvetica,sans-serif;
-    font-weight:bold;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-150%, -50%);
+}
+
+.centered2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(25%, -50%);
 }

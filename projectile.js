@@ -1,7 +1,15 @@
-// shop and tower selection
+// Some stats
+lives = 20
+
+
+
+
+
+// Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
 var moneycount = 0;
-moneydisplay.innerHTML = `Money: ${moneycount}`;
+
+moneydisplay.innerHTML = `Money: $${moneycount}`;
 
 var selectedTower = 1
 
@@ -33,6 +41,25 @@ tower2.addEventListener("click", function() {
   selectedTower = 2;
   console.log(selectedTower);
 });
+
+tower1.addEventListener("mouseover", function() {
+  var tower1label = document.getElementById("tower1label");
+  tower1label.style.display = "";
+});
+tower1.addEventListener("mouseout", function() {
+  var tower1label = document.getElementById("tower1label");
+  tower1label.style.display = "none";
+});
+
+tower2.addEventListener("mouseover", function() {
+  var tower2label = document.getElementById("tower2label");
+  tower2label.style.display = "";
+});
+tower2.addEventListener("mouseout", function() {
+  var tower2label = document.getElementById("tower2label");
+  tower2label.style.display = "none";
+});
+
 
 class Tile {
   constructor(tileDiv, tileId) {
