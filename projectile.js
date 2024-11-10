@@ -54,7 +54,7 @@ class Tile {
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
       moneycount -= 15
       moneydisplay.innerHTML = `Money: $${moneycount}`;
-      const bullet = new Bullet(tower, enemies[0]);
+      const bullet = new Bullet(tower, getTarget());
       bullet.hone();    
       function animate() {
         bullet.target = getTarget();
