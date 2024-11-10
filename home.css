@@ -49,6 +49,11 @@ h3{
    text-align: center;
 }
 
+.video{
+    position:absolute;
+
+}
+
 /* #farm {
     top: 200px;
     left: 270px;
