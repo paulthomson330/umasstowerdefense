@@ -35,12 +35,14 @@ class Tile {
       this.element.classList.add('tile-1');
     } else if (this.tileId === 2){
       this.element.classList.add('tile-2');
-    }else if (this.tileId === 3){
-      this.element.classList.add('tile-3');
+    }else if (this.tileId === 99){
+      this.element.classList.add('tile-99');
     }else if (this.tileId === 4){
       this.element.classList.add('tile-4');
     }else if (this.tileId === 5){
       this.element.classList.add('tile-5');
+    }else{
+      this.element.classList.add('tile-6');
     }
   }
 
@@ -332,9 +334,9 @@ class Enemy {
       this.delete()
       lives -= 1
       livesdisplay.innerHTML = `Lives: ${lives}`;
-      if(lives == 0){
-        window.location.replace("gameOverLose.html");
-      }
+      //if(lives == 0){
+        //window.location.replace("gameOverLose.html");
+      //}
     }else{
       this.counter ++;
     }
@@ -504,7 +506,7 @@ function getTarget() {
 
 
 // Fetch the map data and create tiles
-fetch('finalmap.json')
+fetch('mapfinal.json')
   .then(response => {
     if (!response.ok) {
         throw new Error('Network response was not ok');

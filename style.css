@@ -26,25 +26,6 @@ body {
   z-index: 1;
 }
 
-
-.tile-1 {
-  background-color: rgb(57, 39, 0);    /* Example: Tile ID 1 could be red */
-}
-
-.tile-2 {
-  background-color: green;
-}
-.tile-3 {
-  background-color: rgb(107, 193, 255);
-}
-
-.tile-4 {
-  background-color: rgb(8, 63, 15);
-}
-.tile-5 {
-  background-color: rgb(60, 49, 10);
-}
-
 .tower {
   width: 4.5vh; /* example size */
   height: 4.5vh; /* example size */
