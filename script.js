@@ -1,56 +1,11 @@
-// Set up canvas and context
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+// Tile class definition
 
-// Load the tile map JSON data
-// fetch('maptemplate.json')
-//   .then((response) => response.json())
-//   .then((mapData) => {
-//     const tileWidth = mapData.tilewidth;
-//     const tileHeight = mapData.tileheight;
-
-//     // Load the tileset image
-//     const tilesetImage = new Image();
-//     tilesetImage.src = "tilegreenbrown.png";
-
-//     // Once the tileset image loads, render the map
-//     tilesetImage.onload = () => {
-//       mapData.layers.forEach((layer) => {
-//         if (layer.type === "tilelayer") {
-//           layer.data.forEach((tile, index) => {
-//             if (tile !== 0) { // 0 typically represents an empty tile
-//               const column = index % layer.width;
-//               const row = Math.floor(index / layer.width);
-
-//               const tilesetColumns = tilesetImage.width / tileWidth;
-//               const tileX = ((tile - 1) % tilesetColumns) * tileWidth;
-//               const tileY = Math.floor((tile - 1) / tilesetColumns) * tileHeight;
-
-//               ctx.drawImage(
-//                 tilesetImage,
-//                 tileX, tileY, tileWidth, tileHeight,
-//                 column * tileWidth, row * tileHeight, tileWidth, tileHeight
-//               );
-//             }
-//           });
-//         }
-//       });
-//     };
-//   })
-//   .catch((error) => {
-//     console.error("Error loading tilemap:", error);
-//   });
-
-//   const TILE_WIDTH = 52;
-//   const TILE_HEIGHT = 52;
-
-fetch('maptemplate.json')
+// Fetch the map data and create tiles
+fetch('finalmap.json')
   .then(response => {
-    // Check if the response is successful (status 200)
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
-    // Parse the JSON data from the response
     return response.json();
   })
   .then(mapData => {
@@ -58,35 +13,37 @@ fetch('maptemplate.json')
     const layer = mapData.layers[0];
     const tileWidth = mapData.tilewidth;
     const tileHeight = mapData.tileheight;
-    const width = layer.width;
-    const height = layer.height;
     const data = layer.data;
 
     const mapContainer = document.getElementById('map-grid-container');
 
     let tile_id = 0;
+    const tiles = [];  // To store Tile objects
 
     // Create tiles dynamically based on the data array
     data.forEach((tileId, index) => {
         const tileDiv = document.createElement('div');
         tileDiv.classList.add('tile');
-        
-        // Example: Assign specific classes based on tileId
-        if (tileId === 1) {
-            tileDiv.classList.add('tile-1');
-        } else if (tileId === 2) {
-            tileDiv.classList.add('tile-2');
-            tileDiv.id = `tile-${tile_id}`;
-            tileDiv.addEventListener('click', (function (tileId) {
-              return function () {
-                console.log(`Tile ${tileId} clicked!`);
-              }
-            })(tile_id));
+        tileDiv.id = `tile-${tile_id}`;
 
-            tile_id += 1;
-        }
+        const tile = new Tile(tileDiv, tileId);  // Create a Tile object
 
-        // Append each tile to the container
+        // Store the Tile object in the tiles array
+        tiles.push(tile);
+
+        // Add click event to each tile to place a tower
+        tileDiv.addEventListener('click', () => {
+            console.log(`Tile ${tileId} clicked!`);
+            if (tile.canPlaceTower()) {
+                const tower = new Tower('block.png', tile); // Create a new Tower
+                tile.placeTower(tower); // Place the tower on the clicked tile
+            } else {
+                console.log('Cannot place tower here!');
+            }
+        });
+
         mapContainer.appendChild(tileDiv);
+        tile_id += 1;  // Increment the tile ID
     });
   })
+  .catch(error => console.error('Error fetching map data:', error));

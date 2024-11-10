@@ -45,6 +45,10 @@ h3{
     margin: auto;
 }
 
+.centercontainer{
+   text-align: center;
+}
+
 /* #farm {
     top: 200px;
     left: 270px;
