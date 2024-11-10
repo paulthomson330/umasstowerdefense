@@ -140,3 +140,16 @@ body {
   font-weight: bold;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
+
+#lives-overlay {
+  position: absolute;  /* Position the text relative to the grid */
+  top: 90%;  /* Adjust the vertical position (30% from the top) */
+  left: 20%; /* Adjust the horizontal position (50% from the left) */
+  transform: translate(-50%, -50%);  /* Center the text */
+  font-size: 2rem;  /* Adjust the font size */
+  color: rgb(0, 0, 0);  /* Text color */
+  background-color: rgba(255, 255, 255, 1);  /* Semi-transparent background */
+  padding: 20px;  /* Padding around the text */
+  border-radius: 5px; /* Optional: rounded corners */
+  z-index: 10;  /* Ensure text appears above the grid */
+}

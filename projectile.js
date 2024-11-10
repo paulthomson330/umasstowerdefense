@@ -1,11 +1,22 @@
 // Some stats
-lives = 20
+class dartboard{
+  constructor(){
+    this.currentX = -1;  // Initialize position
+    this.currentY = -1;
+    this.counter = 1;
+    this.velocity = "y+";
+  }
+}
+
+lives = 5
+var livesdisplay = document.getElementById('lives-overlay');
 
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 0;
+var moneycount = 150000;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
+livesdisplay.innerHTML = `Lives: ${lives}`;
 
 class Tile {
   constructor(tileDiv, tileId) {
@@ -33,7 +44,7 @@ class Tile {
 
   // Method to check if a tower can be placed on this tile
   canPlaceTower() {
-    return this.tileId === 2;  // Example: Only allow towers on tile-2
+    return (this.tileId === 2 && moneycount >= 15);  // Example: Only allow towers on tile-2
   }
 
   // Method to place a tower on this tile
@@ -41,17 +52,27 @@ class Tile {
     if (this.canPlaceTower()) {
       this.placedTower = tower; // The tower is placed on this tile
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
-      const bullet = new Bullet(tower);
-
+      moneycount -= 15
+      moneydisplay.innerHTML = `Money: $${moneycount}`;
+      const bullet = new Bullet(tower, getTarget());
+      bullet.hone();    
       function animate() {
+        bullet.target = getTarget();
         bullet.shoot();  // Update bullet position
         for (let enemy of enemies) {
           if (bullet.checkCollision(enemy)) {
-            enemy.delete();
-            bullet.target = enemies[0];
+            enemy.health -=1;
+            console.log(enemy.health)
+            if (enemy.health <= 0){
+              enemy.delete();
+            }
+            moneycount += 5;
+            moneydisplay.innerHTML = `Money: $${moneycount}`;
+            
+
+            bullet.target = getTarget();
           }
-        } 
-        bullet.hone();       
+        }    
         requestAnimationFrame(animate);  // Request the next frame of animation
       }
 
@@ -78,7 +99,7 @@ var selectedTower = 1
 
 var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
-let towerType = new TowerType(1, 'block.png');
+let towerType = new TowerType(1, 'assets/block.png');
 
 tower1.addEventListener("click", function() {
   // Ensure both towers are reset
@@ -90,8 +111,7 @@ tower1.addEventListener("click", function() {
   tower2.classList.add("answerBtnsOff");
   
   selectedTower = 1;
-  towerType = new TowerType(selectedTower, 'block.png');
-  console.log(selectedTower);
+  towerType = new TowerType(selectedTower, 'assets/block.png');
   towerType.displayInfo();
 });
 
@@ -105,8 +125,7 @@ tower2.addEventListener("click", function() {
   tower1.classList.add("answerBtnsOff");
   
   selectedTower = 2;
-  towerType = new TowerType(selectedTower, 'block2.png');
-  console.log(selectedTower);
+  towerType = new TowerType(selectedTower, 'assets/block2.png');
   towerType.displayInfo();
 });
 
@@ -154,8 +173,8 @@ class Tower {
 
 // Bullet class definition
 class Bullet {
-    constructor(tower) {
-      this.target = enemies[0];
+    constructor(tower, enemy) {
+      this.target = enemy;
       this.spx = 0;
       this.spy = 0;
       this.homeX = tower.x;        // Initial X position (where the bullet starts)
@@ -163,23 +182,21 @@ class Bullet {
       this.currentX = tower.x;     // Current X position
       this.currentY = tower.y;     // Current Y position
       this.element = this.createBulletElement();  // Create the DOM element
+      this.overallSpeed = 20
     }
   
     createBulletElement() {
       const bullet = document.createElement('div');
       bullet.classList.add('bullet');
-      bullet.style.backgroundImage = 'url(crumb.png)';
+      bullet.style.backgroundImage = 'url(assets/crumb.png)';
       bullet.style.backgroundSize = 'cover';
       bullet.style.position = 'absolute';
       bullet.style.left = `${this.currentX}px`;
       bullet.style.top = `${this.currentY}px`;
       document.body.appendChild(bullet);
-      this.hone();
       return bullet;
     }
     hone() {
-      console.log(this.target.currentX);
-      console.log(this.homeX);
       
       let x = this.target.currentX - this.homeX;
       let y = this.target.currentY - this.homeY;
@@ -188,21 +205,21 @@ class Bullet {
       
       // Adjust x or y based on the direction
       if (directionVelocity === "y+") {
-          y += 10;
+          y += 60;
       } else if (directionVelocity === "x+") {
-          x += 10;
+          x += 60;
       } else if (directionVelocity === "y-") {
-          y -= 10;
+          y -= 60;
       } else if (directionVelocity === "x-") {
-          x -= 10;
+          x -= 60;
       }
       
       // Calculate the Euclidean distance (magnitude) between the points
       let sqrt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)); // or you can use x**2 + y**2 and then Math.sqrt
       
       // Normalize the velocity components
-      this.spx = (x / sqrt)*120;
-      this.spy = (y / sqrt)*120;
+      this.spx = (x / sqrt)*this.overallSpeed;
+      this.spy = (y / sqrt)*this.overallSpeed;
   }
   
   checkCollision(enemy) {
@@ -220,7 +237,7 @@ class Bullet {
         return !(bulletRight < enemyLeft || bulletLeft > enemyRight || bulletBottom < enemyTop || bulletTop > enemyBottom);
     }
 
-    shoot(){
+    shoot(){   
         this.currentX += this.spx;  // Update the current X position by the speed
         this.currentY += this.spy;
         
@@ -229,7 +246,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX > window.innerWidth || this.currentY > window.innerHeight || this.currentX < 0 || this.currentY < 0) {
+        if (this.currentX >  1300|| this.currentY >  1200|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -237,23 +254,24 @@ class Bullet {
     }
 }
 
-var firstylimit = 2550;
-var firstxlimit = 2750;
-var secondylimit = 350;
-var secondxlimit = 4970;
-var thirdylimit = 2250;
-var thirdxlimit = 3700;
-var endlimit = 1800;
+var firstylimit = 630;
+var firstxlimit = 688;
+var secondylimit = 100;
+var secondxlimit = 1250;
+var thirdylimit = 580;
+var thirdxlimit = 950;
+var endlimit = 450;
 // Enemy class with fixed advance method
 class Enemy {
-  constructor(png, curx, cury) {
+  constructor(png, curx, cury, speed, health) {
     this.png = png;
     this.currentX = curx;  // Initialize position
     this.currentY = cury;
     this.element = this.createEnemyElement();
     this.counter = 1;
-    this.speed = 20;
+    this.speed = speed;
     this.velocity = "y+";
+    this.health = health;
   }
 
   createEnemyElement() {
@@ -299,6 +317,8 @@ class Enemy {
     }else if (this.counter === 8){
       console.log("lost");
       this.delete()
+      lives -= 1
+      livesdisplay.innerHTML = `Lives: ${lives}`;
     }else{
       this.counter ++;
     }
@@ -312,10 +332,22 @@ class Enemy {
 let enemies = [];
 
 // Function to spawn a new enemy and add it to the enemies array
-function spawnEnemy() {
-  const enemy = new Enemy("crumb.png", 1320, 350);  // Starting position for each enemy
+function spawnEnemy(n) {
+  if(n==1){
+  const enemy = new Enemy("assets/crumb.png", 330, 65, 15, 1);  // Starting position for each enemy
   enemies.push(enemy);
   console.log(enemies);
+  }
+  if(n==2){
+    const enemy = new Enemy("assets/crumb.png", 330, 65, 15, 2);  // Starting position for each enemy
+    enemies.push(enemy);
+    console.log(enemies);
+    }
+  if(n==3){
+    const enemy = new Enemy("assets/crumb.png", 330, 65, 30, 1);  // Starting position for each enemy
+    enemies.push(enemy);
+    console.log(enemies);
+      }
 }
 
 // Function to animate all enemies
@@ -328,14 +360,106 @@ function animate2() {
 // Main game initialization
 window.onload = function() {
   // Start by spawning the first enemy
-  spawnEnemy();
+  spawnEnemy(1);
 
-  // Spawn a new enemy every 2 seconds
-  setInterval(spawnEnemy, 2000);  // Adjust time as needed for spawn rate
-
+  // Wave1
+  var enemyCounter = 0;
+  const interval1 = setInterval(() => {
+    spawnEnemy(1);
+    enemyCounter++;
+    console.log("Wave 1 - Enemies spawned:", enemyCounter);
+    if (enemyCounter === 9) {
+      clearInterval(interval1);  // Stop Wave 1 interval
+      startWave2();  // Start Wave 2
+    }
+  }, 2000);
+  
+  function startWave2() {
+    enemyCounter = 0;  // Reset counter for Wave 2
+    const interval2 = setInterval(() => {
+      spawnEnemy(1);
+      enemyCounter++;
+      console.log("Wave 2 - Enemies spawned:", enemyCounter);
+      if (enemyCounter === 15) {
+        clearInterval(interval2);  // Stop Wave 2 interval
+        startWave2Part2();  // Start Wave 3
+      }
+    }, 2000);
+  }
+  
+  function startWave2Part2() {
+    enemyCounter = 0;  // Reset counter for Wave 3
+    const interval3 = setInterval(() => {
+      spawnEnemy(2);
+      enemyCounter++;
+      console.log("Wave 2Pt2 - Enemies spawned:", enemyCounter);
+      if (enemyCounter === 3) {
+        clearInterval(interval3);  // Stop Wave 2 prt2 interval
+        startWave3();
+        // You can start additional waves or other logic here
+      }
+    }, 2000);
+  }
+  function startWave3() {
+    enemyCounter = 0;  // Reset counter for Wave 3
+    const interval4 = setInterval(() => {
+      spawnEnemy(2);
+      enemyCounter++;
+      console.log("Wave 3 - Enemies spawned:", enemyCounter);
+      if (enemyCounter === 10) {
+        clearInterval(interval4);  // Stop Wave 3 interval
+        startWave4()
+        // You can start additional waves or other logic here
+      }
+    }, 2000);}
+    function startWave4() {
+      enemyCounter = 0;  // Reset counter for Wave 3
+      const interval5 = setInterval(() => {
+        spawnEnemy(3);
+        enemyCounter++;
+        console.log("Wave 4 - Enemies spawned:", enemyCounter);
+        if (enemyCounter === 10) {
+          clearInterval(interval5);  // Stop Wave 4 interval
+          startWave5();
+          // You can start additional waves or other logic here
+        }
+      }, 2000);}
+      function startWave5() {
+        enemyCounter = 0;  // Reset counter for Wave 3
+        const interval6 = setInterval(() => {
+          spawnEnemy(2);
+          enemyCounter++;
+          console.log("Wave 5 - Enemies spawned:", enemyCounter);
+          if (enemyCounter === 15) {
+            clearInterval(interval6);  // Stop Wave 5 interval
+            // You can start additional waves or other logic here
+          }
+        }, 2000);
+        enemyCounter = 0;  // Reset counter for Wave 3
+        const interval7 = setInterval(() => {
+          spawnEnemy(3);
+          enemyCounter++;
+          console.log("Wave 5 Part 2- Enemies spawned:", enemyCounter);
+          if (enemyCounter === 10) {
+            clearInterval(interval7);  // Stop Wave 5 interval
+            // You can start additional waves or other logic here
+          }
+        }, 2000);
+  }
+      
   // Start the animation loop
   animate2();
 };
+
+var Dartboard = new dartboard();
+function getTarget() {
+  // Check if there's at least one enemy in the list
+  if (enemies.length === 0){
+    return Dartboard;
+  }else{
+    return enemies[0];
+  }
+}
 
 
 // Fetch the map data and create tiles
