@@ -10,7 +10,7 @@ class dartboard{
 
 lives = 5
 var livesdisplay = document.getElementById('lives-overlay');
-
+var wavedisplay = document.getElementById('waveslabel');
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
 var moneycount = 150000;
@@ -364,6 +364,10 @@ window.onload = function() {
 
   // Wave1
   var enemyCounter = 0;
+  wavedisplay.innerHTML = `WAVE 1`;
+  setTimeout(() => {
+    wavedisplay.style = "display: none";
+  }, "3000");
   const interval1 = setInterval(() => {
     spawnEnemy(1);
     enemyCounter++;
@@ -376,6 +380,11 @@ window.onload = function() {
   
   function startWave2() {
     enemyCounter = 0;  // Reset counter for Wave 2
+    wavedisplay.style = "display: unset";
+    wavedisplay.innerHTML = `WAVE 2`;
+    setTimeout(() => {
+      wavedisplay.style = "display: none";
+    }, "3000");
     const interval2 = setInterval(() => {
       spawnEnemy(1);
       enemyCounter++;
@@ -401,6 +410,12 @@ window.onload = function() {
     }, 2000);
   }
   function startWave3() {
+    wavedisplay.style = "display: unset";
+    wavedisplay.innerHTML = `WAVE 3`;
+    setTimeout(() => {
+      wavedisplay.style = "display: none";
+    }, "3000");
+    
     enemyCounter = 0;  // Reset counter for Wave 3
     const interval4 = setInterval(() => {
       spawnEnemy(2);
@@ -413,6 +428,11 @@ window.onload = function() {
       }
     }, 2000);}
     function startWave4() {
+      wavedisplay.style = "display: unset";
+      wavedisplay.innerHTML = `WAVE 4`;
+      setTimeout(() => {
+        wavedisplay.style = "display: none";
+      }, "3000");
       enemyCounter = 0;  // Reset counter for Wave 3
       const interval5 = setInterval(() => {
         spawnEnemy(3);
@@ -425,7 +445,12 @@ window.onload = function() {
         }
       }, 2000);}
       function startWave5() {
+        wavedisplay.style = "display: unset";
         enemyCounter = 0;  // Reset counter for Wave 3
+        wavedisplay.innerHTML = `FINAL WAVE!!!!`;
+        setTimeout(() => {
+          wavedisplay.style = "display: none";
+        }, "3000");
         const interval6 = setInterval(() => {
           spawnEnemy(2);
           enemyCounter++;
