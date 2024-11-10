@@ -11,25 +11,6 @@ var moneycount = 0;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
 
-tower1.addEventListener("mouseover", function() {
-  var tower1label = document.getElementById("tower1label");
-  tower1label.style.display = "";
-});
-tower1.addEventListener("mouseout", function() {
-  var tower1label = document.getElementById("tower1label");
-  tower1label.style.display = "none";
-});
-
-tower2.addEventListener("mouseover", function() {
-  var tower2label = document.getElementById("tower2label");
-  tower2label.style.display = "";
-});
-tower2.addEventListener("mouseout", function() {
-  var tower2label = document.getElementById("tower2label");
-  tower2label.style.display = "none";
-});
-
-
 class Tile {
   constructor(tileDiv, tileId) {
     this.element = tileDiv;  // The DOM element representing the tile
@@ -125,6 +106,24 @@ tower2.addEventListener("click", function() {
   towerType = new TowerType(selectedTower, 'block2.png');
   console.log(selectedTower);
   towerType.displayInfo();
+});
+
+tower1.addEventListener("mouseover", function() {
+  var tower1label = document.getElementById("tower1label");
+  tower1label.style.display = "";
+});
+tower1.addEventListener("mouseout", function() {
+  var tower1label = document.getElementById("tower1label");
+  tower1label.style.display = "none";
+});
+
+tower2.addEventListener("mouseover", function() {
+  var tower2label = document.getElementById("tower2label");
+  tower2label.style.display = "";
+});
+tower2.addEventListener("mouseout", function() {
+  var tower2label = document.getElementById("tower2label");
+  tower2label.style.display = "none";
 });
 
 class Tower {
