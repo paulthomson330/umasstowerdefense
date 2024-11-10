@@ -151,16 +151,16 @@ img {
 #tower1{
   position:absolute;
   top:50%;
-  right:0%;
-  height: 20px;
-  width: 25px;
+  right:-25%;
+  height: 30px;
+  width: 45px;
 }
 #tower2{
   position:absolute;
   top:50%;
-  right:180%;
-  height: 20px;
-  width: 25px;
+  right:155%;
+  height: 30px;
+  width: 45px;
 }
 #lobster{
   position:absolute;
@@ -170,6 +170,16 @@ img {
   top:700px;
   right:510px;
 }
+
+#van{
+  position:absolute;
+  z-index: 2;
+  width:150px;
+  height:110px;
+  bottom:725px;
+  right:1120px;
+}
+
 #box{
   position:absolute;
   z-index: 5;
