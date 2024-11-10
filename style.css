@@ -4,6 +4,7 @@ body {
     align-items: center;
     margin: 0;
     background-color: #f0f0f0;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
   }
 
 
@@ -105,4 +106,20 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(25%, -50%);
+}
+
+.waves {
+  position: absolute;  /* Position the text relative to the grid */
+  top: 50%;  /* Adjust the vertical position (30% from the top) */
+  left: 50%;
+  text-align: center; /* Adjust the horizontal position (50% from the left) */
+  transform: translate(-50%, -50%);  /* Center the text */
+  font-size: 2rem;  /* Adjust the font size */
+  color: rgb(0, 0, 0);  /* Text color */
+  background-color: hsla(0, 0%, 100%, 0.75);  /* Semi-transparent background */
+  padding: 20px;  /* Padding around the text */
+  border-radius: 5px; /* Optional: rounded corners */
+  z-index: 10;  /* Ensure text appears above the grid */
+  font-weight: bold;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
