@@ -69,7 +69,7 @@ class Tile {
             moneydisplay.innerHTML = `Money: $${moneycount}`;
             bullet.target = getTarget();
           }else{
-            enemy.speed = enemy.speed*.75;
+            enemy.speed = Math.max(enemy.speed*.75, 3);
             bullet.target = getTarget();
           } 
         }
@@ -273,7 +273,7 @@ class Enemy {
     this.currentY = cury;
     this.element = this.createEnemyElement();
     this.counter = 1;
-    this.speed = 10;
+    this.speed = 12;
     this.velocity = "y+";
   }
 
