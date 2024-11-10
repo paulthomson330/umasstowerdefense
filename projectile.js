@@ -79,9 +79,10 @@ class Tile {
 }
 
 class TowerType{
-  constructor(type, png){
+  constructor(type, png, speed){
     this.type = type;
     this.png = png;
+    this.speed = speed;
   }
 
   displayInfo() {
@@ -143,9 +144,9 @@ tower2.addEventListener("mouseout", function() {
 });
 
 class Tower {
-  constructor(png, tile) {
+  constructor(type, png, tile) {
       
-      // this.type = type;
+      this.type = type;
       this.tile = tile; // The Tile object
       this.png = png; // The image for the tower
       this.element = this.createTowerElement(); // Create the DOM element for the tower
@@ -241,7 +242,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX >  1300|| this.currentY >  1200|| this.currentX <  0|| this.currentY < 0) {
+        if (this.currentX >  1300|| this.currentY >  1000|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -397,7 +398,7 @@ fetch('finalmap.json')
         tileDiv.addEventListener('click', () => {
             console.log(`Tile ${tileId} clicked!`);
             if (tile.canPlaceTower()) {
-                const tower = new Tower(towerType.png, tile); // Create a new Tower
+                const tower = new Tower(towerType.type, towerType.png, tile); // Create a new Tower
                 tile.placeTower(tower); // Place the tower on the clicked tile
             } else {
                 console.log('Cannot place tower here!');
