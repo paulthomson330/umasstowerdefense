@@ -13,7 +13,7 @@ var livesdisplay = document.getElementById('lives-overlay');
 
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 150000;
+var moneycount = 60;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
 livesdisplay.innerHTML = `Lives: ${lives}`;
@@ -64,8 +64,11 @@ class Tile {
           if (bullet.checkCollision(enemy)) {
             enemy.health -=1;
             console.log(enemy.health)
-            if (enemy.health <= 0 && bullet.png == 'assets/RedBullet.png'){
-              enemy.delete();
+            if (bullet.png == 'assets/RedBullet.png'){
+              enemy.health -=1;
+              if(enemy.health <= 0){
+                enemy.delete();
+              }
             }
             if (bullet.png == 'assets/BlueBullet.png'){
               enemy.speed = Math.max(enemy.speed*.75, 3);
@@ -210,15 +213,16 @@ class Bullet {
       
       const directionVelocity = this.target.velocity;
       
+      let factor = 10*this.target.speed;
       // Adjust x or y based on the direction
       if (directionVelocity === "y+") {
-          y += 60;
+          y += factor;
       } else if (directionVelocity === "x+") {
-          x += 60;
+          x += factor;
       } else if (directionVelocity === "y-") {
-          y -= 60;
+          y -= factor;
       } else if (directionVelocity === "x-") {
-          x -= 60;
+          x -= factor;
       }
       
       // Calculate the Euclidean distance (magnitude) between the points
