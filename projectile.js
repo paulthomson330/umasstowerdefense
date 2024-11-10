@@ -308,6 +308,9 @@ class Enemy {
       this.delete()
       lives -= 1
       livesdisplay.innerHTML = `Lives: ${lives}`;
+      if (lives == 0){
+        window.location.replace("gameOverLose.html");
+      }
     }else{
       this.counter ++;
     }
