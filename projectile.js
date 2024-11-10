@@ -67,14 +67,14 @@ class Tile {
             if (enemy.health <= 0 && bullet.png == 'assets/RedBullet.png'){
               enemy.delete();
             }
+            if (bullet.png == 'assets/BlueBullet.png'){
+              enemy.speed = Math.max(enemy.speed*.75, 3);
+              bullet.target = getTarget();
+            }
             console.log(bullet.png)
             moneycount += 5;
             moneydisplay.innerHTML = `Money: $${moneycount}`;
             bullet.target = getTarget();
-          }else{
-            enemy.speed = Math.max(enemy.speed*.75, 3);
-            bullet.target = getTarget();
-          } 
         }
         }    
         requestAnimationFrame(animate);  // Request the next frame of animation
