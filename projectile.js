@@ -60,13 +60,19 @@ class Tile {
         bullet.target = getTarget();
         bullet.shoot();  // Update bullet position
         for (let enemy of enemies) {
+          console.log("collision: ", bullet.checkCollision(enemy))
           if (bullet.checkCollision(enemy)) {
+            console.log("tower type:", bullet.tower.type)
+            if(bullet.tower.type == 2){
             enemy.delete();
             moneycount += 5;
             moneydisplay.innerHTML = `Money: $${moneycount}`;
-
             bullet.target = getTarget();
-          }
+          }else{
+            enemy.speed = enemy.speed*.75;
+            bullet.target = getTarget();
+          } 
+        }
         }    
         requestAnimationFrame(animate);  // Request the next frame of animation
       }
@@ -79,10 +85,11 @@ class Tile {
 }
 
 class TowerType{
-  constructor(type, png, speed){
+  constructor(type, png, speed, seedPng){
     this.type = type;
     this.png = png;
     this.speed = speed;
+    this.seedPng = seedPng;
   }
 
   displayInfo() {
@@ -95,7 +102,7 @@ var selectedTower = 1
 
 var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
-let towerType = new TowerType(1, 'assets/block.png');
+let towerType = new TowerType(1, 'assets/block.png', 20, 'assets/BlueBullet.png');
 
 tower1.addEventListener("click", function() {
   // Ensure both towers are reset
@@ -107,7 +114,7 @@ tower1.addEventListener("click", function() {
   tower2.classList.add("answerBtnsOff");
   
   selectedTower = 1;
-  towerType = new TowerType(selectedTower, 'assets/block.png');
+  towerType = new TowerType(selectedTower, 'assets/block.png', 20, 'assets/BlueBullet.png');
   towerType.displayInfo();
 });
 
@@ -121,7 +128,7 @@ tower2.addEventListener("click", function() {
   tower1.classList.add("answerBtnsOff");
   
   selectedTower = 2;
-  towerType = new TowerType(selectedTower, 'assets/block2.png');
+  towerType = new TowerType(selectedTower, 'assets/block2.png', 10, 'assets/RedBullet.png');
   towerType.displayInfo();
 });
 
