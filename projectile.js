@@ -55,7 +55,7 @@ class Tile {
       moneycount -= 15
       moneydisplay.innerHTML = `Money: $${moneycount}`;
       const bullet = new Bullet(tower, enemies[0]);
-
+      bullet.hone();    
       function animate() {
         bullet.target = getTarget();
         bullet.shoot();  // Update bullet position
@@ -67,8 +67,7 @@ class Tile {
 
             bullet.target = getTarget();
           }
-        } 
-        bullet.hone();       
+        }    
         requestAnimationFrame(animate);  // Request the next frame of animation
       }
 
@@ -233,7 +232,7 @@ class Bullet {
         return !(bulletRight < enemyLeft || bulletLeft > enemyRight || bulletBottom < enemyTop || bulletTop > enemyBottom);
     }
 
-    shoot(){
+    shoot(){   
         this.currentX += this.spx;  // Update the current X position by the speed
         this.currentY += this.spy;
         
@@ -242,7 +241,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX >  1300|| this.currentY >  600|| this.currentX <  0|| this.currentY < 0) {
+        if (this.currentX >  1300|| this.currentY >  1200|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
