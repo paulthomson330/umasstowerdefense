@@ -20,7 +20,7 @@ body {
   width: 5vh;
   height: 5vh;
   background-color: #cccccc;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa;  removes line between tiles */
   position: relative;  /* Add relative positioning */
   z-index: 1;
 }
