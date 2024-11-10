@@ -66,7 +66,7 @@ class Tile {
       80, 85, 86, 87, 88, 89, 90, 91, 92, 97, 98, 99, 100, 101, 102,
       103, 109, 110, 111, 112, 113, 121, 122, 123, 133, 134, 135
     ];
-    return (invalidTiles.indexOf(this.tileId) < 0 && moneycount >= 15);  // Example: Only allow towers on tile-2
+    return (invalidTiles.indexOf(this.tileId) < 0 && moneycount >= 25);  // Example: Only allow towers on tile-2
   }
 
   // Method to place a tower on this tile
@@ -74,7 +74,7 @@ class Tile {
     if (this.canPlaceTower()) {
       this.placedTower = tower; // The tower is placed on this tile
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
-      moneycount -= 15
+      moneycount -= 25
       moneydisplay.innerHTML = `Dining Dollars: $${moneycount}`;
       const bullet = new Bullet(tower, getTarget(), towerType.seedPng, towerType.speed);
       bullet.hone();    
@@ -131,7 +131,9 @@ var selectedTower = 1
 
 var tower1 = document.getElementById('tower1')
 var tower2 = document.getElementById('tower2')
-let towerType = new TowerType(1, 'assets/block.png', 20, 'assets/BlueBullet.png');
+let towerType = new TowerType(2, 'assets/block2.png', 10, 'assets/RedBullet.png');
+
+tower2.classList.add("answerBtnsOn");
 
 tower1.addEventListener("click", function() {
   // Ensure both towers are reset
@@ -161,23 +163,23 @@ tower2.addEventListener("click", function() {
   towerType.displayInfo();
 });
 
-tower1.addEventListener("mouseover", function() {
-  var tower1label = document.getElementById("tower1label");
-  tower1label.style.display = "";
-});
-tower1.addEventListener("mouseout", function() {
-  var tower1label = document.getElementById("tower1label");
-  tower1label.style.display = "none";
-});
+// tower1.addEventListener("mouseover", function() {
+//   var tower1label = document.getElementById("tower1label");
+//   tower1label.style.display = "";
+// });
+// tower1.addEventListener("mouseout", function() {
+//   var tower1label = document.getElementById("tower1label");
+//   tower1label.style.display = "none";
+// });
 
-tower2.addEventListener("mouseover", function() {
-  var tower2label = document.getElementById("tower2label");
-  tower2label.style.display = "";
-});
-tower2.addEventListener("mouseout", function() {
-  var tower2label = document.getElementById("tower2label");
-  tower2label.style.display = "none";
-});
+// tower2.addEventListener("mouseover", function() {
+//   var tower2label = document.getElementById("tower2label");
+//   tower2label.style.display = "";
+// });
+// tower2.addEventListener("mouseout", function() {
+//   var tower2label = document.getElementById("tower2label");
+//   tower2label.style.display = "none";
+// });
 
 class Tower {
   constructor(type, png, tile) {
@@ -499,7 +501,7 @@ window.onload = function() {
         clearInterval(interval2);  // Stop Wave 2 interval
         startWave2Part2();  // Start Wave 3
       }
-    }, 1000);
+    }, 800);
   }
   
   function startWave2Part2() {
@@ -513,7 +515,7 @@ window.onload = function() {
         startWave3();
         // You can start additional waves or other logic here
       }
-    }, 1000);
+    }, 500);
   }
   function startWave3() {
     wavedisplay.style = "display: unset";
@@ -527,12 +529,12 @@ window.onload = function() {
       spawnEnemy(2);
       enemyCounter++;
       console.log("Wave 3 - Enemies spawned:", enemyCounter);
-      if (enemyCounter === 10) {
+      if (enemyCounter === 15) {
         clearInterval(interval4);  // Stop Wave 3 interval
         startWave4()
         // You can start additional waves or other logic here
       }
-    }, 1000);}
+    }, 600);}
     function startWave4() {
       wavedisplay.style = "display: unset";
       wavedisplay.innerHTML = `WAVE 4`;
@@ -544,12 +546,12 @@ window.onload = function() {
         spawnEnemy(3);
         enemyCounter++;
         console.log("Wave 4 - Enemies spawned:", enemyCounter);
-        if (enemyCounter === 10) {
+        if (enemyCounter === 13) {
           clearInterval(interval5);  // Stop Wave 4 interval
           startWave5();
           // You can start additional waves or other logic here
         }
-      }, 1000);}
+      }, 800);}
       function startWave5() {
         wavedisplay.style = "display: unset";
         enemyCounter = 0;  // Reset counter for Wave 3
@@ -561,7 +563,7 @@ window.onload = function() {
           spawnEnemy(2);
           enemyCounter++;
           console.log("Wave 5 - Enemies spawned:", enemyCounter);
-          if (enemyCounter === 15) {
+          if (enemyCounter === 25) {
             clearInterval(interval6);  // Stop Wave 5 interval
             // You can start additional waves or other logic here
           }
@@ -571,14 +573,14 @@ window.onload = function() {
           spawnEnemy(3);
           enemyCounter++;
           console.log("Wave 5 Part 2- Enemies spawned:", enemyCounter);
-          if (enemyCounter === 10) {
+          if (enemyCounter === 15) {
             clearInterval(interval7);  // Stop Wave 5 interval
             interval8();
 
             // You can start additional waves or other logic here
           }
           
-        }, 500);
+        }, 200);
         const interval8 = setInterval(() => {
           if(lives >0 && enemies.length === 0){
             console.log("A");
