@@ -4,7 +4,7 @@ var livesdisplay = document.getElementById('lives-overlay');
 
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 15;
+var moneycount = 1005;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
 livesdisplay.innerHTML = `Lives: ${lives}`;
@@ -308,9 +308,9 @@ class Enemy {
       this.delete()
       lives -= 1
       livesdisplay.innerHTML = `Lives: ${lives}`;
-      if (lives == 0){
-        window.location.replace("gameOverLose.html");
-      }
+      // if (lives == 0){
+      //   window.location.replace("gameOverLose.html");
+      // }
     }else{
       this.counter ++;
     }
