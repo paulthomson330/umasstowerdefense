@@ -62,8 +62,8 @@ class Tile {
         for (let enemy of enemies) {
           console.log("collision: ", bullet.checkCollision(enemy))
           if (bullet.checkCollision(enemy)) {
-            console.log("tower type:", bullet.tower.type)
-            if(bullet.tower.type == 2){
+            console.log(bullet.png)
+            if(bullet.png == 'assets/RedBullet.png'){
             enemy.delete();
             moneycount += 5;
             moneydisplay.innerHTML = `Money: $${moneycount}`;
@@ -250,7 +250,7 @@ class Bullet {
         this.element.style.top = `${this.currentY}px`;
 
         // Reset bullet if it goes off screen (you can adjust the left position reset based on the game area size)
-        if (this.currentX >  1300|| this.currentY >  1000|| this.currentX <  0|| this.currentY < 0) {
+        if (this.currentX >  1500|| this.currentY > 750|| this.currentX <  0|| this.currentY < 0) {
             this.currentX = this.homeX;
             this.currentY = this.homeY;
             this.hone();
@@ -273,7 +273,7 @@ class Enemy {
     this.currentY = cury;
     this.element = this.createEnemyElement();
     this.counter = 1;
-    this.speed = 20;
+    this.speed = 10;
     this.velocity = "y+";
   }
 
