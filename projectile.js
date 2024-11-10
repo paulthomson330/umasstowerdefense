@@ -1,11 +1,13 @@
 // Some stats
-lives = 20
+lives = 5
+var livesdisplay = document.getElementById('lives-overlay');
 
 // Shop and tower selection
 var moneydisplay = document.getElementById('overlay-text');
-var moneycount = 0;
+var moneycount = 15;
 
 moneydisplay.innerHTML = `Money: $${moneycount}`;
+livesdisplay.innerHTML = `Lives: ${lives}`;
 
 class Tile {
   constructor(tileDiv, tileId) {
@@ -33,7 +35,7 @@ class Tile {
 
   // Method to check if a tower can be placed on this tile
   canPlaceTower() {
-    return this.tileId === 2;  // Example: Only allow towers on tile-2
+    return (this.tileId === 2 && moneycount >= 15);  // Example: Only allow towers on tile-2
   }
 
   // Method to place a tower on this tile
@@ -41,6 +43,8 @@ class Tile {
     if (this.canPlaceTower()) {
       this.placedTower = tower; // The tower is placed on this tile
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
+      moneycount -= 15
+      moneydisplay.innerHTML = `Money: $${moneycount}`;
       const bullet = new Bullet(tower);
 
       function animate() {
@@ -48,6 +52,9 @@ class Tile {
         for (let enemy of enemies) {
           if (bullet.checkCollision(enemy)) {
             enemy.delete();
+            moneycount += 5;
+            moneydisplay.innerHTML = `Money: $${moneycount}`;
+
             bullet.target = enemies[0];
           }
         } 
@@ -299,6 +306,8 @@ class Enemy {
     }else if (this.counter === 8){
       console.log("lost");
       this.delete()
+      lives -= 1
+      livesdisplay.innerHTML = `Lives: ${lives}`;
     }else{
       this.counter ++;
     }
