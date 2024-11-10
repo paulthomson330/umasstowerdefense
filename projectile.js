@@ -54,7 +54,7 @@ class Tile {
       this.element.appendChild(tower.element); // Append the tower element to the tile's DOM
       moneycount -= 15
       moneydisplay.innerHTML = `Money: $${moneycount}`;
-      const bullet = new Bullet(tower, getTarget());
+      const bullet = new Bullet(tower, getTarget(), towerType.seedPng, towerType.speed);
       bullet.hone();    
       function animate() {
         bullet.target = getTarget();
@@ -169,8 +169,9 @@ class Tower {
 
 // Bullet class definition
 class Bullet {
-    constructor(tower, enemy) {
+    constructor(tower, enemy, png, speed) {
       this.target = enemy;
+      this.png =png;
       this.spx = 0;
       this.spy = 0;
       this.homeX = tower.x;        // Initial X position (where the bullet starts)
@@ -178,13 +179,13 @@ class Bullet {
       this.currentX = tower.x;     // Current X position
       this.currentY = tower.y;     // Current Y position
       this.element = this.createBulletElement();  // Create the DOM element
-      this.overallSpeed = 20
+      this.overallSpeed = speed;
     }
   
     createBulletElement() {
       const bullet = document.createElement('div');
       bullet.classList.add('bullet');
-      bullet.style.backgroundImage = 'url(assets/crumb.png)';
+      bullet.style.backgroundImage = `url(${this.png})`;
       bullet.style.backgroundSize = 'cover';
       bullet.style.position = 'absolute';
       bullet.style.left = `${this.currentX}px`;
